@@ -12,10 +12,10 @@
 
         <script language="JavaScript">
             if (!#{loginBean.sessao}) {
-                window.location.href = "/controle_academico/login.xhtml";
+                window.location.href = "/pi_iv/login.xhtml";
             }
             if (!#{loginBean.permissao.getOrDefault('Cadastrar Alunos', false)}) {
-                window.location.href = "/controle_academico/naoAutorizado.xhtml";
+                window.location.href = "/pi_iv/naoAutorizado.xhtml";
             }
         </script>        
     </h:head>
