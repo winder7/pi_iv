@@ -24,8 +24,8 @@
         <b:column col-sm="9" offset-sm="3" col-md="10" offset="2">
             <div class="divPrincipal">
                 <b:panel>
-                    <h:graphicImage class="img" value="resources/img/logo.png"/><br/>
-                    <h:outputLabel class="msg" rendered="#{!loginBean.tipoUsr.equalsIgnoreCase('Aluno')}">Olá #{loginBean.nomeUsr} Bem-Vindo ao Sistema - SHAA</h:outputLabel>
+                    <b:image class="img" value="resources/img/logo.png"/><br/>
+                    <h:outputLabel class="msg" rendered="#{!loginBean.tipoUsr.equalsIgnoreCase('Aluno')}">Olá #{loginBean.nomeUsr} Bem-Vindo ao Sistema - SCPD</h:outputLabel>
                     <h:outputLabel class="msg" rendered="#{loginBean.tipoUsr.equalsIgnoreCase('Aluno')}">Olá #{loginBean.nomeUsr} bem-vindo ao portal do aluno</h:outputLabel>
                     <div class="footer" style="text-align: center">
                         <hr/>
