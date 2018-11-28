@@ -14,9 +14,6 @@
             if (!#{loginBean.sessao}) {
                 window.location.href = "/pi_iv/login.xhtml";
             }
-            if (!#{loginBean.permissao.getOrDefault('Cadastrar Disciplinas', false)}) {
-                window.location.href = "/pi_iv/naoAutorizado.xhtml";
-            }
         </script>
     </h:head>
     <h:body>
