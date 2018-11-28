@@ -34,11 +34,11 @@
                         <b:row>
                             <b:inputText value="#{bensBean.nome}" label="Nome" placeholder="Digite o nome do responsável" type="text" 
                                          tiny-screen="one-fourth" />
-                            <b:inputText value="#{bensBean.data_compra}" label="Responsável" placeholder="Digite o nome do responsável" type="text" 
+                            <b:inputText value="#{bensBean.data_compra}" label="Data da compra" placeholder="Digite o data da compra do bem" type="date" 
                                          tiny-screen="one-fourth" />
-                            <b:inputText value="#{bensBean.vida_util}" label="Responsável" placeholder="Digite o nome do responsável" type="text" 
+                            <b:inputText value="#{bensBean.vida_util}" label="Vida útil" placeholder="Digite oa vida útil do bem" type="number" 
                                          tiny-screen="one-fourth" />
-                            <b:switch value="#{bensBean.novo}" label="Situação" onColor="success" offColor="danger" on-text="Novo" off-text="Usado"
+                            <b:switch value="#{bensBean.novo}" label="Situação" onColor="success" offColor="warning" on-text="Novo" off-text="Usado"
                                       tiny-screen="one-fourth" />
                         </b:row>
 
