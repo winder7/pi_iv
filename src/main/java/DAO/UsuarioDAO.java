@@ -17,11 +17,11 @@ public class UsuarioDAO {
 
     public void inserirUsuario(Usuario usuario) {
 
-        String SQL = "INSERT INTO usuario(login, senha, tipo, situacao, data_cad) VALUES (?, md5(?), ?, ?, '" + new Date() + "')";
+        String SQL = "INSERT INTO usuario(login, senha, situacao, data_cad) VALUES (?, md5(?), ?, '" + new Date() + "')";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, usuario.getLogin());
             pstm.setString(2, usuario.getSenha());
-            pstm.setBoolean(4, Boolean.parseBoolean(usuario.getSituacao()));
+            pstm.setBoolean(3, Boolean.parseBoolean(usuario.getSituacao()));
             pstm.execute();
 
             BD.getConexao().close();
@@ -36,7 +36,7 @@ public class UsuarioDAO {
 
         ArrayList<Usuario> usuario = new ArrayList<>();
 
-        String SQL = "SELECT id_user, login, senha, tipo, situacao, data_cad FROM usuario ORDER BY login ASC";
+        String SQL = "SELECT id_user, login, senha, situacao, data_cad FROM usuario ORDER BY login ASC";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
             try (ResultSet rs = pstm.executeQuery()) {
@@ -62,9 +62,9 @@ public class UsuarioDAO {
     public void alterarUsuario(Usuario usuario) {
         String SQL;
         if (!usuario.getSenha().equals("")) {
-            SQL = "UPDATE usuario SET login = (?), senha = md5(?), tipo = (?), situacao = (?) WHERE id_user = (?)";
+            SQL = "UPDATE usuario SET login = (?), senha = md5(?), situacao = (?) WHERE id_user = (?)";
         } else {
-            SQL = "UPDATE usuario SET login = (?), tipo = (?), situacao = (?) WHERE id_user = (?)";
+            SQL = "UPDATE usuario SET login = (?), situacao = (?) WHERE id_user = (?)";
         }
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
@@ -182,7 +182,7 @@ public class UsuarioDAO {
 
     public void obterLogin(LoginBean login) {
 
-        String SQL = "SELECT login, tipo, id_user FROM usuario WHERE UPPER(login) = UPPER(?)";
+        String SQL = "SELECT login, id_user FROM usuario WHERE UPPER(login) = UPPER(?)";
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, login.getUsuario());
