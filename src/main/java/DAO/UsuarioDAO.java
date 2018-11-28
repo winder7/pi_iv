@@ -17,11 +17,12 @@ public class UsuarioDAO {
 
     public void inserirUsuario(Usuario usuario) {
 
-        String SQL = "INSERT INTO usuario(login, senha, situacao, data_cad) VALUES (?, md5(?), ?, '" + new Date() + "')";
+        String SQL = "INSERT INTO usuario(login, senha, situacao, data_cad, email) VALUES (?, md5(?), ?, '" + new Date() + "', ?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, usuario.getLogin());
             pstm.setString(2, usuario.getSenha());
             pstm.setBoolean(3, Boolean.parseBoolean(usuario.getSituacao()));
+            pstm.setString(4, usuario.getEmail());
             pstm.execute();
 
             BD.getConexao().close();
@@ -36,7 +37,7 @@ public class UsuarioDAO {
 
         ArrayList<Usuario> usuario = new ArrayList<>();
 
-        String SQL = "SELECT id_user, login, senha, situacao, data_cad FROM usuario ORDER BY login ASC";
+        String SQL = "SELECT id_user, login, senha, situacao, data_cad, email FROM usuario ORDER BY login ASC";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
             try (ResultSet rs = pstm.executeQuery()) {
@@ -46,7 +47,8 @@ public class UsuarioDAO {
                             rs.getString("login"),
                             rs.getString("senha").equals("e8d95a51f3af4a3b134bf6bb680a213a") ? "Padrão" : "Privada",
                             rs.getBoolean("situacao") ? "Ativo" : "Inativo",
-                            Formatar.data(rs.getDate("data_cad"), "dd/MM/yyyy")
+                            Formatar.data(rs.getDate("data_cad"), "dd/MM/yyyy"),
+                            rs.getString("email")
                     );
                     usuario.add(usr);
                 }
@@ -62,9 +64,9 @@ public class UsuarioDAO {
     public void alterarUsuario(Usuario usuario) {
         String SQL;
         if (!usuario.getSenha().equals("")) {
-            SQL = "UPDATE usuario SET login = (?), senha = md5(?), situacao = (?) WHERE id_user = (?)";
+            SQL = "UPDATE usuario SET login = ?, senha = md5(?), situacao = ?, email = ? WHERE id_user = (?)";
         } else {
-            SQL = "UPDATE usuario SET login = (?), situacao = (?) WHERE id_user = (?)";
+            SQL = "UPDATE usuario SET login = ?, situacao = ?, email = ? WHERE id_user = ?";
         }
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
@@ -72,10 +74,12 @@ public class UsuarioDAO {
             if (!usuario.getSenha().equals("")) {
                 pstm.setString(2, usuario.getSenha());
                 pstm.setBoolean(3, Boolean.parseBoolean(usuario.getSituacao()));
-                pstm.setInt(4, usuario.getId_user());
+                pstm.setString(4, usuario.getEmail());
+                pstm.setInt(5, usuario.getId_user());
             } else {
                 pstm.setBoolean(2, Boolean.parseBoolean(usuario.getSituacao()));
-                pstm.setInt(3, usuario.getId_user());
+                pstm.setString(3, usuario.getEmail());
+                 pstm.setInt(4, usuario.getId_user());
             }
             pstm.executeUpdate();
 
@@ -136,24 +140,13 @@ public class UsuarioDAO {
 
     public boolean verificaUsuarioEmail(String usuario, String email) {
 
-        String SQL = "";
         boolean result = false;
-        if (usuario.matches("[0-9]+")) {
-            SQL = "SELECT m.matricula, a.email, (SELECT situacao FROM usuario WHERE login = ?) FROM aluno a INNER JOIN MatriculaCurso m ON(m.fk_Aluno_cpf = a.cpf) WHERE m.matricula = ? AND UPPER(a.email) = UPPER(?)";
-        } else {
-            SQL = "SELECT u.login, f.email, u.situacao FROM usuario u INNER JOIN funcionario f ON(f.fk_usuario_id_user = u.id_user) WHERE UPPER(login) = UPPER(?) AND UPPER(email) = UPPER(?)";
-        }
+        String SQL = "SELECT login, email, situacao FROM usuario WHERE UPPER(login) = UPPER(?) AND UPPER(email) = UPPER(?)";
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
-            if (usuario.matches("[0-9]+")) {
-                pstm.setString(1, usuario);
-                pstm.setInt(2, Integer.parseInt(usuario));
-                pstm.setString(3, email);
-            } else {
-                pstm.setString(1, usuario);
-                pstm.setString(2, email);
-            }
+            pstm.setString(1, usuario);
+            pstm.setString(2, email);
 
             ResultSet rs = pstm.executeQuery();
 
@@ -188,7 +181,7 @@ public class UsuarioDAO {
             pstm.setString(1, login.getUsuario());
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    login.setNomeUsr(rs.getString("login").matches("[0-9]+") ? nomeAluno(rs.getString("login"), login) : rs.getString("login"));
+                    login.setNomeUsr(rs.getString("login"));
                     LoginBean.id_logado = rs.getInt("id_user");
                 }
 
@@ -199,28 +192,6 @@ public class UsuarioDAO {
         } catch (Exception ex) {
             Exibir.Mensagem("Erro ao Obter Login do Banco de Dados!: \n" + ex);
         }
-    }
-    
-    public String nomeAluno(String login, LoginBean l){
-        String nomeAl = "";
-        String SQL = "SELECT a.nome, a.cpf FROM aluno a INNER JOIN MatriculaCurso m ON(m.fk_Aluno_cpf = a.cpf) WHERE m.matricula = " + login;
-        
-        try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
-            try (ResultSet rs = pstm.executeQuery()) {
-                while (rs.next()) {
-                    nomeAl = rs.getString("nome");
-                    l.setCpfAluno(rs.getString("cpf"));
-                }
-
-                pstm.close();
-                BD.getConexao().close();
-            }
-            System.out.println("Nome do aluno obtido com sucesso!");
-        } catch (Exception ex) {
-            Exibir.Mensagem("Erro ao obter nome do aluno!: \n" + ex);
-        }
-        String primeiroNome[] = nomeAl.split(" ");
-        return primeiroNome[0];
     }
 
     public void alterarSenha(String login, String novaSenha) {

@@ -20,6 +20,7 @@ public class UsuarioBean {
     private String senha;
     private String situacao = "true";
     private ArrayList<Usuario> usuarios;
+    private String email;
     Usuario usr;
     UsuarioDAO usrDao;
     private boolean editar;
@@ -35,6 +36,7 @@ public class UsuarioBean {
         login = null;
         senha = "senha";
         situacao = "true";
+        email = null;
         editar = false;
         return ("cadastrarUsuario");
     }
@@ -44,7 +46,7 @@ public class UsuarioBean {
     }
     
     public void add(){
-        usr = new Usuario(login, senha, situacao);
+        usr = new Usuario(login, senha, situacao, email);
         usrDao.inserirUsuario(usr);
         obter();
         cancelar();
@@ -56,10 +58,11 @@ public class UsuarioBean {
         login = lista.getLogin();
         senha = lista.getSenha().equals("Privada") ? "" : "senha" ;
         situacao = lista.getSituacao().equals("Ativo") ? "true" : "false";
+        email = lista.getEmail();
     }
     
     public void alterar(){
-        usr = new Usuario(id_user, login, senha, situacao);
+        usr = new Usuario(id_user, login, senha, situacao, email);
         usrDao.alterarUsuario(usr);
         editar = false;
         obter();
@@ -122,5 +125,13 @@ public class UsuarioBean {
 
     public void setEditar(boolean editar) {
         this.editar = editar;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
