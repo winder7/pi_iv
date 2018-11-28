@@ -1,6 +1,5 @@
 package controller;
 
-import DAO.PermissaoDAO;
 import DAO.UsuariosDAO;
 import Util.Exibir;
 import Util.Gerar;
@@ -42,7 +41,6 @@ public class LoginBean {
         if (login.verificaUsuarioSenha(usuario, senha)) {
             sessao = true;
             login.obterLogin(this);
-            setPermissoes();
             senha = null;
             return "index";
         } else if (cont != 3) {
@@ -58,13 +56,6 @@ public class LoginBean {
         }
     }
     
-    private void setPermissoes() {
-        permissao = new LinkedHashMap<>();
-        PermissaoDAO permiss = new PermissaoDAO();
-        System.out.println(tipoUsr);
-        permissao = permiss.obterPermissoesSessao(tipoUsr);
-        System.out.println(permissao.getOrDefault("OK", false));
-    }
 
     public String soliictarSenha() {
         UsuariosDAO login = new UsuariosDAO();
