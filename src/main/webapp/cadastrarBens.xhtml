@@ -6,7 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Cadastar Bens</title>
+        <title>Cadastar Patrimonio</title>
         <link rel="shortcut icon" href="resources/img/home.png"/>
         <link rel="StyleSheet" type="text/css" href="resources/css/cadastrarUsuario.css" media="screen" />
 
@@ -24,7 +24,7 @@
         </div>
         <b:column col-sm="9" offset-sm="3" col-md="10" offset="2">
             <div>
-                <b:panel title="Cadastar Bens" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
+                <b:panel title="Cadastar Patrimonio" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
                     <b:form>
                         <b:row>
                             <b:selectOneMenu value="#{bensBean.fk_Empresa_id}" label="Empresa" tiny-screen="half" required="true">
@@ -33,15 +33,34 @@
                         </b:row>
                         <b:row>
                             <b:inputText value="#{bensBean.nome}" label="Nome" placeholder="Digite o nome do responsável" type="text" 
-                                         tiny-screen="one-fourth" />
+                                         tiny-screen="one-fourth" required="true"/>
                             <b:inputText value="#{bensBean.data_compra}" label="Data da compra" placeholder="Digite o data da compra do bem" type="date" 
-                                         tiny-screen="one-fourth" />
-                            <b:inputText value="#{bensBean.vida_util}" label="Vida útil" placeholder="Digite oa vida útil do bem" type="number" 
-                                         tiny-screen="one-fourth" />
+                                         tiny-screen="one-fourth" required="true"/>
+                            <b:touchSpin label="Vida Útil (Anos)" value="#{bensBean.vida_util}" min="1" max="30" step="1" 
+                                         tiny-screen="one-fourth" required="true"/>
+                            <b:switch value="#{bensBean.novo}" label="Situação" onColor="success" offColor="warning" on-text="Novo" off-text="Usado"
+                                      tiny-screen="one-fourth" >
+                                <f:ajax render="tempouso"/>
+                            </b:switch>
+                        </b:row>
+
+                        <b:row>
+                            <b:inputText id="teste" value="#{bensBean.novo}" label="Nome" placeholder="Digite o nome do responsável" type="text" 
+                                         tiny-screen="one-fourth" required="true"/>
+                            <b:inputText value="#{bensBean.data_compra}" label="Data da compra" placeholder="Digite o data da compra do bem" type="date" 
+                                         tiny-screen="one-fourth" required="true"/>
+                            <b:touchSpin label="Vida Útil (Anos)" value="#{bensBean.vida_util}" min="1" max="30" step="1" 
+                                         tiny-screen="one-fourth" required="true"/>
                             <b:switch value="#{bensBean.novo}" label="Situação" onColor="success" offColor="warning" on-text="Novo" off-text="Usado"
                                       tiny-screen="one-fourth" />
                         </b:row>
 
+                        <b:row>
+                            <b:touchSpin id="tempouso2" label="Quantidade de turnos trabalhados" rendered="#{bensBean.novo}" value="#{bensBean.turno_trabalhado}" min="1" max="3" step="1" 
+                                         tiny-screen="one-fourth" required="true"/>
+                            <b:touchSpin id="tempouso" rendered="#{bensBean.novo}" label="Tempo de Uso (Meses)" value="#{bensBean.tempo_uso}" min="1" max="360" step="1" 
+                                         tiny-screen="one-fourth" required="true"/>
+                        </b:row>
 
                         <b:row>
                             <b:commandButton iconAwesome="#{empresaBean.icone}" icon-size="lg" value="#{empresaBean.botao}" class="btn btn-lg btnIncluir" 

@@ -55,6 +55,9 @@ public class BensBean {
 
     }
 
+    public void teste(){
+        System.out.println(this.novo);
+    }
 //    public void add() {
 //        if (botao.equals("Incluir")) {
 //            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
