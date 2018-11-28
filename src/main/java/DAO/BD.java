@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 public class BD {
 
     static String driver = "jdbc:postgresql://localhost:5432/";
-    static String banco = "controle_academico";
+    static String banco = "pi_iv";
     static String usuario = "postgres";
     static String senha = "root";
 

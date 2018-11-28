@@ -1,8 +1,8 @@
 package controller;
 
-import DAO.UsuariosDAO;
+import DAO.UsuarioDAO;
 import Util.Relatorio;
-import entities.Usuarios;
+import entities.Usuario;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,15 +20,15 @@ public class UsuarioBean {
     private String senha;
     private String tipo;
     private String situacao = "true";
-    private ArrayList<Usuarios> usuarios;
-    Usuarios usr;
-    UsuariosDAO usrDao;
+    private ArrayList<Usuario> usuarios;
+    Usuario usr;
+    UsuarioDAO usrDao;
     private boolean editar;
     
     public UsuarioBean() {
         usuarios = new ArrayList<>();
-        usr = new Usuarios();
-        usrDao = new UsuariosDAO();
+        usr = new Usuario();
+        usrDao = new UsuarioDAO();
         obter();
     }
     
@@ -46,30 +46,28 @@ public class UsuarioBean {
     }
     
     public void add(){
-        usr = new Usuarios(login, senha, tipo, situacao);
         usrDao.inserirUsuario(usr);
         obter();
         cancelar();
     }
     
-    public void iniciaEditar(Usuarios lista) {
+    public void iniciaEditar(Usuario lista) {
         editar = true;
         id_user = lista.getId_user();
         login = lista.getLogin();
         senha = lista.getSenha().equals("Privada") ? "" : "senha" ;
-        tipo = lista.getTipo();
         situacao = lista.getSituacao().equals("Ativo") ? "true" : "false";
     }
     
     public void alterar(){
-        usr = new Usuarios(id_user, login, senha, tipo, situacao);
+        usr = new Usuario(id_user, login, senha, tipo, situacao);
         usrDao.alterarUsuario(usr);
         editar = false;
         obter();
         cancelar();
     }
 
-    public void remover(Usuarios lista) {
+    public void remover(Usuario lista) {
         usrDao.apagarUsuario(lista.getId_user());
         obter();
     }
@@ -120,11 +118,11 @@ public class UsuarioBean {
         this.situacao = situacao;
     }
 
-    public ArrayList<Usuarios> getUsuarios() {
+    public ArrayList<Usuario> getUsuarios() {
         return usuarios;
     }
 
-    public void setUsuarios(ArrayList<Usuarios> usuarios) {
+    public void setUsuarios(ArrayList<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
 

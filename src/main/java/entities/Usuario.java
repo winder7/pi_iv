@@ -1,41 +1,24 @@
 package entities;
 
 /**
- *
- * @author Alexandre Almeida
+ * @Autor Alexandre Almeida / Winder Rezende
+ * @Data 28/11/2018
  */
-public class Usuarios {
+public class Usuario {
 
     private int id_user;
     private String login;
     private String senha;
-    private String tipo;
     private String situacao;
     private String data_cad;
 
-    public Usuarios() {
-    }
-    
-    public Usuarios(String login, String senha, String tipo, String situacao) {
-        this.login = login;
-        this.senha = senha;
-        this.tipo = tipo;
-        this.situacao = situacao;
-    }
-    
-    public Usuarios(int id_user, String login, String senha, String tipo, String situacao) {
-        this.id_user = id_user;
-        this.login = login;
-        this.senha = senha;
-        this.tipo = tipo;
-        this.situacao = situacao;
+    public Usuario() {
     }
 
-    public Usuarios(int id_user, String login, String senha, String tipo, String situacao, String data_cad) {
+    public Usuario(int id_user, String login, String senha, String situacao, String data_cad) {
         this.id_user = id_user;
         this.login = login;
         this.senha = senha;
-        this.tipo = tipo;
         this.situacao = situacao;
         this.data_cad = data_cad;
     }
@@ -62,14 +45,6 @@ public class Usuarios {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getSituacao() {

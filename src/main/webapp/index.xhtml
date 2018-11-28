@@ -15,23 +15,22 @@
             }
         </script>
     </h:head>
-    <h:body>
+    <h:body style="background-image: url('resources/img/back.png')">
         <div id="header">
-            <ui:insert name="templateAdmin" >
-                <ui:include src="/templates/templateAdmin.xhtml" />
+            <ui:insert name="template" >
+                <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
         <b:column col-sm="9" offset-sm="3" col-md="10" offset="2">
             <div class="divPrincipal">
-                <b:panel>
-                    <b:image class="img" value="resources/img/logo.png"/><br/>
-                    <h:outputLabel class="msg" rendered="#{!loginBean.tipoUsr.equalsIgnoreCase('Aluno')}">Olá #{loginBean.nomeUsr} Bem-Vindo ao Sistema - SCPD</h:outputLabel>
-                    <h:outputLabel class="msg" rendered="#{loginBean.tipoUsr.equalsIgnoreCase('Aluno')}">Olá #{loginBean.nomeUsr} bem-vindo ao portal do aluno</h:outputLabel>
+                
+                    <h:graphicImage class="img" value="resources/img/logo.png"/><br/>
+                    <h:outputLabel class="msg" >Olá #{loginBean.nomeUsr}, Bem-Vindo ao Sistema</h:outputLabel>
                     <div class="footer" style="text-align: center">
                         <hr/>
                         &copy; 2018 WAAL Software. Todos os direitos reservados.
                     </div>
-                </b:panel>
+                
             </div>
         </b:column>
     </h:body>
