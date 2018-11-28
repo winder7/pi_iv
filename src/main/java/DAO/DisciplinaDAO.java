@@ -1,7 +1,7 @@
 package DAO;
 
 import Util.Exibir;
-import entities.Disciplina;
+import entities.Empresa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class DisciplinaDAO {
 
-    public void inserirDisciplina(Disciplina disciplina) {
+    public void inserirDisciplina(Empresa disciplina) {
         String SQL = "INSERT INTO disciplina(codigo, nome, situacao, fk_curso_cod) VALUES (?,?,?,?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, disciplina.getCodigo());
@@ -30,16 +30,16 @@ public class DisciplinaDAO {
         }
     }
 
-    public ArrayList<Disciplina> obterDisciplina() {
+    public ArrayList<Empresa> obterDisciplina() {
 
-        ArrayList<Disciplina> disciplina = new ArrayList<>();
+        ArrayList<Empresa> disciplina = new ArrayList<>();
 
         String SQL = "SELECT * FROM disciplina ORDER BY codigo";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    Disciplina disc = new Disciplina(
+                    Empresa disc = new Empresa(
                             rs.getString("codigo"),
                             rs.getString("nome"),
                             rs.getString("situacao"),
@@ -57,9 +57,9 @@ public class DisciplinaDAO {
         return disciplina;
     }
     
-    public ArrayList<Disciplina> obterDisciplinaDisponivel(String fk_Aluno_cpf, int fk_Curso_cod) {
+    public ArrayList<Empresa> obterDisciplinaDisponivel(String fk_Aluno_cpf, int fk_Curso_cod) {
 
-        ArrayList<Disciplina> disciplina = new ArrayList<>();
+        ArrayList<Empresa> disciplina = new ArrayList<>();
 
         String SQL = "SELECT nome, codigo FROM disciplina WHERE codigo \n"
                 + "NOT IN(SELECT d.codigo FROM matriculadisciplina m\n"
@@ -73,7 +73,7 @@ public class DisciplinaDAO {
 
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    Disciplina disc = new Disciplina(
+                    Empresa disc = new Empresa(
                             rs.getString("codigo"),
                             rs.getString("nome")
                     );
@@ -88,16 +88,16 @@ public class DisciplinaDAO {
         return disciplina;
     }
 
-    public ArrayList<Disciplina> obterDisciplinaPorCurso(int cod_curso) {
+    public ArrayList<Empresa> obterDisciplinaPorCurso(int cod_curso) {
 
-        ArrayList<Disciplina> disciplina = new ArrayList<>();
+        ArrayList<Empresa> disciplina = new ArrayList<>();
 
         String SQL = "SELECT * FROM disciplina WHERE fk_curso_cod = " + cod_curso + " ORDER BY codigo";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    Disciplina disc = new Disciplina(
+                    Empresa disc = new Empresa(
                             rs.getString("codigo"),
                             rs.getString("nome"),
                             rs.getString("situacao"),
@@ -115,7 +115,7 @@ public class DisciplinaDAO {
         return disciplina;
     }
 
-    public void editarDisciplina(Disciplina d) {
+    public void editarDisciplina(Empresa d) {
         String SQL = "UPDATE disciplina SET codigo = ?, nome = ?, situacao = ?, fk_curso_cod = ? WHERE codigo = ?";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, d.getCodigo());
@@ -135,7 +135,7 @@ public class DisciplinaDAO {
         }
     }
 
-    public void removerDisciplina(Disciplina disciplina) {
+    public void removerDisciplina(Empresa disciplina) {
         String SQL = "DELETE FROM disciplina WHERE codigo = (?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, disciplina.getCodigo());
