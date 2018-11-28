@@ -14,6 +14,19 @@ public class Usuario {
 
     public Usuario() {
     }
+    
+    public Usuario(String login, String senha, String situacao) {
+        this.login = login;
+        this.senha = senha;
+        this.situacao = situacao;
+    }
+    
+    public Usuario(int id_user, String login, String senha, String situacao) {
+        this.id_user = id_user;
+        this.login = login;
+        this.senha = senha;
+        this.situacao = situacao;
+    }
 
     public Usuario(int id_user, String login, String senha, String situacao, String data_cad) {
         this.id_user = id_user;

@@ -18,7 +18,6 @@ public class UsuarioBean {
     private int id_user;
     private String login;
     private String senha;
-    private String tipo;
     private String situacao = "true";
     private ArrayList<Usuario> usuarios;
     Usuario usr;
@@ -35,7 +34,6 @@ public class UsuarioBean {
     public String cancelar(){
         login = null;
         senha = "senha";
-        tipo = "";
         situacao = "true";
         editar = false;
         return ("cadastrarUsuario");
@@ -46,6 +44,7 @@ public class UsuarioBean {
     }
     
     public void add(){
+        usr = new Usuario(login, senha, situacao);
         usrDao.inserirUsuario(usr);
         obter();
         cancelar();
@@ -60,7 +59,7 @@ public class UsuarioBean {
     }
     
     public void alterar(){
-        usr = new Usuario(id_user, login, senha, tipo, situacao);
+        usr = new Usuario(id_user, login, senha, situacao);
         usrDao.alterarUsuario(usr);
         editar = false;
         obter();
@@ -101,15 +100,6 @@ public class UsuarioBean {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public String getSituacao() {
         return situacao;
     }

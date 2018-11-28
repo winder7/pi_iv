@@ -33,14 +33,7 @@
                                 <f:selectItem itemLabel="Padrão (Reiniciar)" itemValue="senha" />
                                 <f:selectItem itemLabel="Privada (Manter)" itemValue="" itemDisabled="#{!usuarioBean.editar}"/>
                             </b:selectOneMenu>
-                            <b:selectOneMenu value="#{usuarioBean.tipo}" label="Tipo" tiny-screen="one-fourth">
-                                <f:selectItem itemLabel="Administrador" itemValue="Administrador" />
-                                <f:selectItem itemLabel="Diretor" itemValue="Diretor" />
-                                <f:selectItem itemLabel="Coordenador" itemValue="Coordenador" />
-                                <f:selectItem itemLabel="Funcionário" itemValue="Funcionário" />
-                                <f:selectItem itemLabel="Aluno" itemValue="Aluno" />
-                            </b:selectOneMenu>
-                            <b:switch value="#{usuarioBean.situacao}" readonly="#{usuarioBean.tipo.equalsIgnoreCase('Administrador')}" label="Situação" onColor="success" offColor="danger" on-text="Ativo" off-text="Inativo" tiny-screen="one-fourth"/>
+                            <b:switch value="#{usuarioBean.situacao}" label="Situação" onColor="success" offColor="danger" on-text="Ativo" off-text="Inativo" tiny-screen="one-fourth"/>
                         </b:row>
                         <b:row>
                             <b:commandButton iconAwesome="plus-circle" icon-size="lg" value="Incluir" class="btn btn-lg btnIncluir" 
@@ -66,7 +59,6 @@
                                          responsive="true">
                                 <b:dataTableColumn value="#{lista.login}" label="Login"/>
                                 <b:dataTableColumn value="#{lista.senha}" label="Senha"/>
-                                <b:dataTableColumn value="#{lista.tipo}" label="Tipo"/>
                                 <b:dataTableColumn value="#{lista.situacao}" label="Situação"/>
                                 <b:dataTableColumn value="#{lista.data_cad}" label="Data do Cadastro"/>
                                 <b:dataTableColumn label="Opções" style="width: 170px">

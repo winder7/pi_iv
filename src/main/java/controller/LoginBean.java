@@ -18,7 +18,6 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class LoginBean {
     public static int id_logado;
-    public static String tipo;
     private String usuario;
     private String senha;
     private String nomeUsr;
