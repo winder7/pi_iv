@@ -1,6 +1,6 @@
 package controller;
 
-import DAO.UsuariosDAO;
+import DAO.UsuarioDAO;
 import Util.Exibir;
 import Util.Gerar;
 import Util.JavaMailApp;
@@ -28,7 +28,6 @@ public class LoginBean {
     private String cpfAluno;
     private boolean sessao = false;
     public int cont = 0;
-    private String tipoUsr;
     private Map<String, Boolean> permissao;
 
     public LoginBean() {
@@ -36,7 +35,7 @@ public class LoginBean {
     }
 
     public String efetuarLogin() {
-        UsuariosDAO login = new UsuariosDAO();
+        UsuarioDAO login = new UsuarioDAO();
 
         if (login.verificaUsuarioSenha(usuario, senha)) {
             sessao = true;
@@ -58,7 +57,7 @@ public class LoginBean {
     
 
     public String soliictarSenha() {
-        UsuariosDAO login = new UsuariosDAO();
+        UsuarioDAO login = new UsuarioDAO();
 
         if (login.verificaUsuarioEmail(usuario, email)) {
             String senhaGerada = Gerar.Senha();
@@ -84,7 +83,7 @@ public class LoginBean {
     }
 
     public String paginaAlterar() {
-        UsuariosDAO login = new UsuariosDAO();
+        UsuarioDAO login = new UsuarioDAO();
         novaSenha = null;
         novaSenhaConf = null;
         if (login.verificaUsuarioSenha(usuario, senha)) {
@@ -97,7 +96,7 @@ public class LoginBean {
     }
 
     public String alterarSenha() {
-        UsuariosDAO login = new UsuariosDAO();
+        UsuarioDAO login = new UsuarioDAO();
         if (login.verificaUsuarioSenha(usuario, senha)) {
             if (novaSenha.equals(novaSenhaConf) && !novaSenha.equals("")) {
                 login.alterarSenha(usuario, novaSenha);
@@ -184,14 +183,6 @@ public class LoginBean {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getTipoUsr() {
-        return tipoUsr;
-    }
-
-    public void setTipoUsr(String tipoUsr) {
-        this.tipoUsr = tipoUsr;
     }
 
     public Map<String, Boolean> getPermissao() {

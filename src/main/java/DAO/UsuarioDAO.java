@@ -3,26 +3,25 @@ package DAO;
 import Util.Exibir;
 import Util.Formatar;
 import controller.LoginBean;
-import entities.Usuarios;
+import entities.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
- * @author Alexandre Almeida
+ * @Autor Alexandre Almeida / Winder Rezende
+ * @Data 28/11/2018
  */
-public class UsuariosDAO {
+public class UsuarioDAO {
 
-    public void inserirUsuario(Usuarios usuarios) {
+    public void inserirUsuario(Usuario usuario) {
 
-        String SQL = "INSERT INTO usuarios(login, senha, tipo, situacao, data_cad) VALUES (?, md5(?), ?, ?, '" + new Date() + "')";
+        String SQL = "INSERT INTO usuario(login, senha, tipo, situacao, data_cad) VALUES (?, md5(?), ?, ?, '" + new Date() + "')";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
-            pstm.setString(1, usuarios.getLogin());
-            pstm.setString(2, usuarios.getSenha());
-            pstm.setString(3, usuarios.getTipo());
-            pstm.setBoolean(4, Boolean.parseBoolean(usuarios.getSituacao()));
+            pstm.setString(1, usuario.getLogin());
+            pstm.setString(2, usuario.getSenha());
+            pstm.setBoolean(4, Boolean.parseBoolean(usuario.getSituacao()));
             pstm.execute();
 
             BD.getConexao().close();
@@ -33,24 +32,23 @@ public class UsuariosDAO {
         }
     }
 
-    public ArrayList<Usuarios> obterUsuarios() {
+    public ArrayList<Usuario> obterUsuarios() {
 
-        ArrayList<Usuarios> usuarios = new ArrayList<>();
+        ArrayList<Usuario> usuario = new ArrayList<>();
 
-        String SQL = "SELECT id_user, login, senha, tipo, situacao, data_cad FROM usuarios ORDER BY login ASC";
+        String SQL = "SELECT id_user, login, senha, tipo, situacao, data_cad FROM usuario ORDER BY login ASC";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    Usuarios usr = new Usuarios(
+                    Usuario usr = new Usuario(
                             rs.getInt("id_user"),
                             rs.getString("login"),
                             rs.getString("senha").equals("e8d95a51f3af4a3b134bf6bb680a213a") ? "Padrão" : "Privada",
-                            rs.getString("tipo"),
                             rs.getBoolean("situacao") ? "Ativo" : "Inativo",
                             Formatar.data(rs.getDate("data_cad"), "dd/MM/yyyy")
                     );
-                    usuarios.add(usr);
+                    usuario.add(usr);
                 }
                 pstm.close();
             }
@@ -58,28 +56,26 @@ public class UsuariosDAO {
         } catch (Exception ex) {
             Exibir.Mensagem("Erro ao obter usuários!: \n" + ex);
         }
-        return usuarios;
+        return usuario;
     }
 
-    public void alterarUsuario(Usuarios usuarios) {
+    public void alterarUsuario(Usuario usuario) {
         String SQL;
-        if (!usuarios.getSenha().equals("")) {
-            SQL = "UPDATE usuarios SET login = (?), senha = md5(?), tipo = (?), situacao = (?) WHERE id_user = (?)";
+        if (!usuario.getSenha().equals("")) {
+            SQL = "UPDATE usuario SET login = (?), senha = md5(?), tipo = (?), situacao = (?) WHERE id_user = (?)";
         } else {
-            SQL = "UPDATE usuarios SET login = (?), tipo = (?), situacao = (?) WHERE id_user = (?)";
+            SQL = "UPDATE usuario SET login = (?), tipo = (?), situacao = (?) WHERE id_user = (?)";
         }
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
-            pstm.setString(1, usuarios.getLogin());
-            if (!usuarios.getSenha().equals("")) {
-                pstm.setString(2, usuarios.getSenha());
-                pstm.setString(3, usuarios.getTipo());
-                pstm.setBoolean(4, Boolean.parseBoolean(usuarios.getSituacao()));
-                pstm.setInt(5, usuarios.getId_user());
+            pstm.setString(1, usuario.getLogin());
+            if (!usuario.getSenha().equals("")) {
+                pstm.setString(2, usuario.getSenha());
+                pstm.setBoolean(3, Boolean.parseBoolean(usuario.getSituacao()));
+                pstm.setInt(4, usuario.getId_user());
             } else {
-                pstm.setString(2, usuarios.getTipo());
-                pstm.setBoolean(3, Boolean.parseBoolean(usuarios.getSituacao()));
-                pstm.setInt(4, usuarios.getId_user());
+                pstm.setBoolean(2, Boolean.parseBoolean(usuario.getSituacao()));
+                pstm.setInt(3, usuario.getId_user());
             }
             pstm.executeUpdate();
 
@@ -93,7 +89,7 @@ public class UsuariosDAO {
 
     public void apagarUsuario(int id_user) {
 
-        String SQL = "DELETE FROM usuarios WHERE id_user = (?)";
+        String SQL = "DELETE FROM usuario WHERE id_user = (?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setInt(1, id_user);
             pstm.executeUpdate();
@@ -109,7 +105,7 @@ public class UsuariosDAO {
     public boolean verificaUsuarioSenha(String usuario, String senha) {
 
         boolean result = false;
-        String SQL = "SELECT login, senha, situacao FROM usuarios WHERE UPPER(login) = UPPER(?) AND senha = md5(?)";
+        String SQL = "SELECT login, senha, situacao FROM usuario WHERE UPPER(login) = UPPER(?) AND senha = md5(?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, usuario);
             pstm.setString(2, senha);
@@ -143,9 +139,9 @@ public class UsuariosDAO {
         String SQL = "";
         boolean result = false;
         if (usuario.matches("[0-9]+")) {
-            SQL = "SELECT m.matricula, a.email, (SELECT situacao FROM usuarios WHERE login = ?) FROM aluno a INNER JOIN MatriculaCurso m ON(m.fk_Aluno_cpf = a.cpf) WHERE m.matricula = ? AND UPPER(a.email) = UPPER(?)";
+            SQL = "SELECT m.matricula, a.email, (SELECT situacao FROM usuario WHERE login = ?) FROM aluno a INNER JOIN MatriculaCurso m ON(m.fk_Aluno_cpf = a.cpf) WHERE m.matricula = ? AND UPPER(a.email) = UPPER(?)";
         } else {
-            SQL = "SELECT u.login, f.email, u.situacao FROM usuarios u INNER JOIN funcionario f ON(f.fk_usuarios_id_user = u.id_user) WHERE UPPER(login) = UPPER(?) AND UPPER(email) = UPPER(?)";
+            SQL = "SELECT u.login, f.email, u.situacao FROM usuario u INNER JOIN funcionario f ON(f.fk_usuario_id_user = u.id_user) WHERE UPPER(login) = UPPER(?) AND UPPER(email) = UPPER(?)";
         }
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
@@ -186,15 +182,13 @@ public class UsuariosDAO {
 
     public void obterLogin(LoginBean login) {
 
-        String SQL = "SELECT login, tipo, id_user FROM usuarios WHERE UPPER(login) = UPPER(?)";
+        String SQL = "SELECT login, tipo, id_user FROM usuario WHERE UPPER(login) = UPPER(?)";
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, login.getUsuario());
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
                     login.setNomeUsr(rs.getString("login").matches("[0-9]+") ? nomeAluno(rs.getString("login"), login) : rs.getString("login"));
-                    login.setTipoUsr(rs.getString("tipo"));
-                    LoginBean.tipo = rs.getString("tipo");
                     LoginBean.id_logado = rs.getInt("id_user");
                 }
 
@@ -231,7 +225,7 @@ public class UsuariosDAO {
 
     public void alterarSenha(String login, String novaSenha) {
 
-        String SQL = "UPDATE usuarios SET senha = md5(?) WHERE UPPER(login) = UPPER(?)";
+        String SQL = "UPDATE usuario SET senha = md5(?) WHERE UPPER(login) = UPPER(?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, novaSenha);
             pstm.setString(2, login);

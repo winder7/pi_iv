@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
- *
- * @author Alexandre Almeida
+ * @Autor Alexandre Almeida / Winder Rezende
+ * @Data 28/11/2018
  */
 public class DisciplinaDAO {
 
