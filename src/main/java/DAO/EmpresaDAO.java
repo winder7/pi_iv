@@ -15,7 +15,7 @@ import java.util.Date;
 public class EmpresaDAO {
 
     public void inserirEmpresa(Empresa empresa) {
-        String SQL = "INSERT INTO empresa(cnpj, nome, telefone, email, responsavel, data_cadastro, fk_Usuario_id_user) VALUES (?,?,?,?,?,'" + new Date() +"', ?)";
+        String SQL = "INSERT INTO empresa(cnpj, nome, telefone, email, responsavel, data_cadastro, fk_Usuario_id_user) VALUES (?,?,?,?,?,'" + new Date() + "', ?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, empresa.getCnpj());
             pstm.setString(2, empresa.getNome());
@@ -30,7 +30,11 @@ public class EmpresaDAO {
             pstm.close();
             System.out.println("Inserido com sucesso!");
         } catch (Exception ex) {
-            Exibir.Mensagem("Erro ao inserir Empresa: " + ex);
+            if (ex.toString().contains("ERROR: duplicate key value violates unique constraint")) {
+                Exibir.MensagemErro("Erro ao inserir Empresa! Já existe uma empresa cadastrada com esse CNPJ! ");
+            } else {
+                Exibir.MensagemErro("Erro ao inserir Empresa: " + ex);
+            }
         }
     }
 
@@ -47,9 +51,9 @@ public class EmpresaDAO {
                             rs.getInt("id"),
                             rs.getString("cnpj"),
                             rs.getString("nome"),
-                            rs.getString("telefone"), 
-                            rs.getString("email"), 
-                            rs.getString("responsavel"), 
+                            rs.getString("telefone"),
+                            rs.getString("email"),
+                            rs.getString("responsavel"),
                             Formatar.data(rs.getDate("data_cadastro"), "dd/MM/yyyy"),
                             rs.getInt("fk_Usuario_id_user")
                     );
@@ -59,22 +63,21 @@ public class EmpresaDAO {
             }
             System.out.println("Empresas obtidas com sucesso!");
         } catch (Exception ex) {
-            Exibir.Mensagem("Erro ao obter Empresa!: \n" + ex);
+            Exibir.MensagemErro("Erro ao obter Empresa!: \n" + ex);
         }
 
         return empresa;
     }
-    
+
     public void editarEmpresa(Empresa empresa) {
-        String SQL = "UPDATE disciplina SET cnpj = ?, nome = ?, telefone = ?, email = ?, responsavel = ?, data_cadastro = ? WHERE id = ?";
+        String SQL = "UPDATE empresa SET cnpj = ?, nome = ?, telefone = ?, email = ?, responsavel = ? WHERE id = ?";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, empresa.getCnpj());
             pstm.setString(2, empresa.getNome());
             pstm.setString(3, empresa.getTelefone());
             pstm.setString(4, empresa.getEmail());
             pstm.setString(5, empresa.getResponsavel());
-            pstm.setString(6, empresa.getData_cadastro());
-            pstm.setInt(7, empresa.getId());
+            pstm.setInt(6, empresa.getId());
 
             System.out.println(SQL);
             pstm.executeUpdate();
@@ -83,12 +86,12 @@ public class EmpresaDAO {
             BD.getConexao().close();
             System.out.println("Alteração efetuada!");
         } catch (Exception ex) {
-            Exibir.Mensagem("Erro ao Alterar empresa!:\n" + ex);
+            Exibir.MensagemErro("Erro ao Alterar empresa!:\n" + ex);
         }
     }
 
     public void removerEmpresa(Empresa empresa) {
-        String SQL = "DELETE FROM empresa WHERE codigo = (?)";
+        String SQL = "DELETE FROM empresa WHERE id = (?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setInt(1, empresa.getId());
 
@@ -97,7 +100,7 @@ public class EmpresaDAO {
             BD.getConexao().close();
             System.out.println("Removido com sucesso!");
         } catch (Exception ex) {
-            Exibir.Mensagem("\nErro ao remover empresa: " + ex);
+            Exibir.MensagemErro("\nErro ao remover empresa: " + ex);
         }
     }
 }

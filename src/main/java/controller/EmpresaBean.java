@@ -1,10 +1,8 @@
 package controller;
 
 import DAO.EmpresaDAO;
-import Util.Formatar;
 import entities.Empresa;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -16,8 +14,6 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class EmpresaBean {
 
-    private boolean readonly = false;
-
     private int id;
     private String cnpj;
     private String nome;
@@ -26,7 +22,6 @@ public class EmpresaBean {
     private String responsavel;
     private String data_cadastro;
     private int fk_Usuario_id_user;
-    ;
     
     private ArrayList<Empresa> empresa;
 
@@ -54,7 +49,6 @@ public class EmpresaBean {
         this.responsavel = null;
         this.data_cadastro = null;
         this.fk_Usuario_id_user = 0;
-        readonly = false;
     }
 
     public void add() {
@@ -72,7 +66,6 @@ public class EmpresaBean {
             obter();
             botao = "Incluir";
             icone = "plus-circle";
-            readonly = false;
         }
     }
 
@@ -82,13 +75,13 @@ public class EmpresaBean {
     }
 
     public void editar(Empresa emp) {
-//        cod_antigo = d.getCodigo();
-//        codigo = d.getCodigo();
-//        nome = d.getNome();
-//        situacao = d.getSituacao();
-//        fk_Curso_cod = d.getFk_Curso_cod();
+        this.id = emp.getId();
+        this.cnpj = emp.getCnpj();
+        this.nome = emp.getNome();
+        this.telefone = emp.getTelefone();
+        this.email = emp.getEmail();
+        this.responsavel = emp.getResponsavel();
         
-        readonly = true;
         botao = "Alterar";
         icone = "fa-refresh";
     }
@@ -100,13 +93,6 @@ public class EmpresaBean {
     }
 
     //Getters e Seters
-    public boolean isReadonly() {
-        return readonly;
-    }
-
-    public void setReadonly(boolean readonly) {
-        this.readonly = readonly;
-    }
 
     public int getId() {
         return id;
