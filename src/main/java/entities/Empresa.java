@@ -6,46 +6,47 @@ package entities;
  */
 public class Empresa {
 
-    private String cod_antigo;
-    private String codigo;
+    private int id;
+    private String cnpj;
     private String nome;
-    private String situacao;
-    private int fk_Curso_cod;
-    
-    public Empresa(String codigo, String nome) {
-        this.codigo = codigo;
+    private String telefone;
+    private String email;
+    private String responsavel;
+    private String data_cadastro;
+    private int fk_Usuario_id_user;
+
+    public Empresa(int id, String cnpj, String nome, String telefone, String email, String responsavel, String data_cadastro, int fk_Usuario_id_user) {
+        this.id = id;
+        this.cnpj = cnpj;
         this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.responsavel = responsavel;
+        this.data_cadastro = data_cadastro;
+        this.fk_Usuario_id_user = fk_Usuario_id_user;
     }
 
-    public Empresa(String codigo, String nome, String situacao, int fk_Curso_cod) {
-        this.codigo = codigo;
+    public Empresa(String cnpj, String nome, String telefone, String email, String responsavel, String data_cadastro, int fk_Usuario_id_user) {
+        this.cnpj = cnpj;
         this.nome = nome;
-        this.situacao = situacao;
-        this.fk_Curso_cod = fk_Curso_cod;
+        this.telefone = telefone;
+        this.email = email;
+        this.responsavel = responsavel;
+        this.data_cadastro = data_cadastro;
+        this.fk_Usuario_id_user = fk_Usuario_id_user;
     }
 
-    public Empresa(String codigo, String nome, String situacao, int fk_Curso_cod, String cod_antigo) {
-        this.cod_antigo = cod_antigo;
-        this.codigo = codigo;
-        this.nome = nome;
-        this.situacao = situacao;
-        this.fk_Curso_cod = fk_Curso_cod;
+
+
+    public Empresa() {
     }
 
-    public String getCod_antigo() {
-        return cod_antigo;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCod_antigo(String cod_antigo) {
-        this.cod_antigo = cod_antigo;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getNome() {
@@ -56,19 +57,52 @@ public class Empresa {
         this.nome = nome;
     }
 
-    public String getSituacao() {
-        return situacao;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public int getFk_Curso_cod() {
-        return fk_Curso_cod;
+    public String getEmail() {
+        return email;
     }
 
-    public void setFk_Curso_cod(int fk_Curso_cod) {
-        this.fk_Curso_cod = fk_Curso_cod;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public String getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public String getData_cadastro() {
+        return data_cadastro;
+    }
+
+    public void setData_cadastro(String data_cadastro) {
+        this.data_cadastro = data_cadastro;
+    }
+
+    public int getFk_Usuario_id_user() {
+        return fk_Usuario_id_user;
+    }
+
+    public void setFk_Usuario_id_user(int fk_Usuario_id_user) {
+        this.fk_Usuario_id_user = fk_Usuario_id_user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
 }

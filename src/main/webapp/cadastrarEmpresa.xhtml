@@ -6,7 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Cadastar Disciplinas</title>
+        <title>Cadastar Empresas</title>
         <link rel="shortcut icon" href="resources/img/home.png"/>
         <link rel="StyleSheet" type="text/css" href="resources/css/cadastrarUsuario.css" media="screen" />
 
@@ -24,20 +24,14 @@
         </div>
         <b:column col-sm="9" offset-sm="3" col-md="10" offset="2">
             <div>
-                <b:panel title="Cadastar Disciplinas" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
+                <b:panel title="Cadastar Empresas" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
                     <b:form>
                         <b:row>
-                            <b:inputText value="#{empresaBean.codigo}" label="Código" readonly="#{empresaBean.readonly}" placeholder="Digite o código da disciplina" type="text" 
+                            <b:inputText value="#{empresaBean.cnpj}" label="Código" readonly="#{empresaBean.readonly}" placeholder="Digite o código da disciplina" type="text" 
                                          tiny-screen="one-fourth" required="true" maxlength="5"/>
                             <b:inputText value="#{empresaBean.nome}" label="Nome" placeholder="Digite o nome da disciplina" type="text" 
                                          tiny-screen="one-fourth" required="true" />
-                            <b:selectOneMenu value="#{empresaBean.situacao}" label="Situação" tiny-screen="one-fourth" required="true">
-                                <f:selectItem itemLabel="Ativa" itemValue="Ativa" />
-                                <f:selectItem itemLabel="Inativa" itemValue="Inativa" />
-                            </b:selectOneMenu>
-                            <b:selectOneMenu value="#{empresaBean.fk_Curso_cod}" label="Curso" tiny-screen="one-fourth" required="true">
-                                <f:selectItems value="#{empresaBean.itensBoxCurso.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />
-                            </b:selectOneMenu>
+                            
                         </b:row>
 
                         <b:row>
@@ -64,7 +58,7 @@
                                 <b:dataTableColumn value="#{lista.codigo}" label="Código"/>
                                 <b:dataTableColumn value="#{lista.nome}" label="Nome"/>
                                 <b:dataTableColumn value="#{lista.situacao}" label="Situação"/>
-                                <b:dataTableColumn value="#{empresaBean.itensBoxCurso.get(lista.fk_Curso_cod)}" label="Curso"/>
+
                                 <b:dataTableColumn label="Opções" style="width: 170px">
                                     <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">
                                         <b:commandButton iconAwesome="trash-o" value="Remover" size="sm" class="btn btn-lg"
