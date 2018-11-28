@@ -1,8 +1,10 @@
 package controller;
 
 import DAO.EmpresaDAO;
+import Util.Formatar;
 import entities.Empresa;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -37,31 +39,10 @@ public class EmpresaBean {
 
     }
 
-    public EmpresaBean(int id, String cnpj, String nome, String telefone, String email, String responsavel, String data_cadastro, int fk_Usuario_id_user) {
-        this.id = id;
-        this.cnpj = cnpj;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.responsavel = responsavel;
-        this.data_cadastro = data_cadastro;
-        this.fk_Usuario_id_user = fk_Usuario_id_user;
-    }
-
-    public EmpresaBean(String cnpj, String nome, String telefone, String email, String responsavel, String data_cadastro, int fk_Usuario_id_user) {
-        this.cnpj = cnpj;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.responsavel = responsavel;
-        this.data_cadastro = data_cadastro;
-        this.fk_Usuario_id_user = fk_Usuario_id_user;
-    }
-
     private void obter() {
         empresa.clear();
         EmpresaDAO empresaDAO = new EmpresaDAO();
-        empresa = empresaDAO.obterEmpresa();
+        empresa = empresaDAO.obterEmpresa(LoginBean.id_logado);
     }
 
     public void limpaTela() {
@@ -79,7 +60,7 @@ public class EmpresaBean {
     public void add() {
         if (botao.equals("Incluir")) {
             EmpresaDAO empresaDAO = new EmpresaDAO();
-            Empresa emp = new Empresa(cnpj, nome, telefone, email, responsavel, data_cadastro, LoginBean.id_logado);
+            Empresa emp = new Empresa(cnpj, nome, telefone, email, responsavel, LoginBean.id_logado);
             empresaDAO.inserirEmpresa(emp);
             limpaTela();
             obter();
@@ -97,7 +78,7 @@ public class EmpresaBean {
 
     public String cancelar() {
         limpaTela();
-        return "cadastrarDisciplina";
+        return "cadastrarEmpresa";
     }
 
     public void editar(Empresa emp) {

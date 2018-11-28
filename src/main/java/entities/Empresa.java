@@ -26,13 +26,12 @@ public class Empresa {
         this.fk_Usuario_id_user = fk_Usuario_id_user;
     }
 
-    public Empresa(String cnpj, String nome, String telefone, String email, String responsavel, String data_cadastro, int fk_Usuario_id_user) {
+    public Empresa(String cnpj, String nome, String telefone, String email, String responsavel, int fk_Usuario_id_user) {
         this.cnpj = cnpj;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
         this.responsavel = responsavel;
-        this.data_cadastro = data_cadastro;
         this.fk_Usuario_id_user = fk_Usuario_id_user;
     }
 

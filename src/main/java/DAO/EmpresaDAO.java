@@ -1,10 +1,12 @@
 package DAO;
 
 import Util.Exibir;
+import Util.Formatar;
 import entities.Empresa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -13,15 +15,14 @@ import java.util.ArrayList;
 public class EmpresaDAO {
 
     public void inserirEmpresa(Empresa empresa) {
-        String SQL = "INSERT INTO empresa(cnpj, nome, telefone, email, responsavel, data_cadastro, fk_Usuario_id_user) VALUES (?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO empresa(cnpj, nome, telefone, email, responsavel, data_cadastro, fk_Usuario_id_user) VALUES (?,?,?,?,?,'" + new Date() +"', ?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, empresa.getCnpj());
             pstm.setString(2, empresa.getNome());
             pstm.setString(3, empresa.getTelefone());
             pstm.setString(4, empresa.getEmail());
             pstm.setString(5, empresa.getResponsavel());
-            pstm.setString(6, empresa.getData_cadastro());
-            pstm.setInt(7, empresa.getFk_Usuario_id_user());
+            pstm.setInt(6, empresa.getFk_Usuario_id_user());
 
             pstm.execute();
 
@@ -33,26 +34,26 @@ public class EmpresaDAO {
         }
     }
 
-    public ArrayList<Empresa> obterEmpresa() {
+    public ArrayList<Empresa> obterEmpresa(int id) {
 
         ArrayList<Empresa> empresa = new ArrayList<>();
 
-        String SQL = "SELECT * FROM empresa ORDER BY nome";
+        String SQL = "SELECT * FROM empresa WHERE fk_Usuario_id_user = " + id + " ORDER BY nome";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    Empresa disc = new Empresa(
+                    Empresa emp = new Empresa(
                             rs.getInt("id"),
                             rs.getString("cnpj"),
                             rs.getString("nome"),
                             rs.getString("telefone"), 
                             rs.getString("email"), 
                             rs.getString("responsavel"), 
-                            rs.getString("data_cadastro"), 
+                            Formatar.data(rs.getDate("data_cadastro"), "dd/MM/yyyy"),
                             rs.getInt("fk_Usuario_id_user")
                     );
-                    empresa.add(disc);
+                    empresa.add(emp);
                 }
                 pstm.close();
             }
