@@ -10,11 +10,11 @@
         <link rel="shortcut icon" href="resources/img/home.png"/>
         <link rel="StyleSheet" type="text/css" href="resources/css/cadastrarUsuario.css" media="screen" />
 
-        <!--        <script language="JavaScript">
+        <script language="JavaScript">
                     if (!#{loginBean.sessao}) {
                         window.location.href = "/pi_iv/login.xhtml";
                     }
-                </script>-->
+        </script>
     </h:head>
     <h:body style=" margin-top: 60px; background-image: url('resources/img/back.png')">
         <div id="header">
@@ -54,7 +54,7 @@
                                       tiny-screen="one-fourth" >
                                 <f:ajax render="tempo" />
                             </b:switch>
-                            <b:touchSpin id="tempo" disabled="#{bensBean.novo}" label="Tempo de Uso (meses)" value="#{bensBean.tempo_uso}" min="12" max="360" step="1" 
+                            <b:touchSpin id="tempo" disabled="#{bensBean.novo}" label="Tempo de Uso (meses)" value="#{bensBean.tempo_uso}" min="0" max="360" step="1" 
                                          tiny-screen="one-fourth" required="true"/>
 
                             <b:selectOneMenu label="Categoria" tiny-screen="one-fourth" value="#{bensBean.categoria}" required="true">

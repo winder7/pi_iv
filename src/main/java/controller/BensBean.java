@@ -148,6 +148,7 @@ public class BensBean {
         }
     }
 
+    //gets setters
     public Double getCusto_bem() {
         return custo_bem;
     }

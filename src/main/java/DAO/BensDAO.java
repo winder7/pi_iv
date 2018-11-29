@@ -4,11 +4,9 @@ import Util.Exibir;
 import Util.Formatar;
 import controller.LoginBean;
 import entities.Bens;
-import entities.Empresa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -98,8 +96,6 @@ public class BensDAO {
             pstm.setInt(10, b.getFk_Empresa_id());
 
             pstm.setInt(11, b.getId());
-
-            System.out.println(pstm);
             pstm.executeUpdate();
 
             pstm.close();
