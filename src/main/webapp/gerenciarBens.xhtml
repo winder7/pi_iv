@@ -42,7 +42,7 @@
                         <b:row style="padding: 15px">
                             <b:dataTable customLangUrl="//cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json" 
                                          class="table table-striped table-bordered" 
-                                         value = "#{bensBean.bens}"
+                                         value = "#{gerenciarBensBean.bens}"
                                          var="lista"
                                          style=" margin-left: auto; margin-right: auto; width: 100%; position: relative;"
                                          responsive="true">
@@ -50,20 +50,20 @@
 
                                 <b:dataTableColumn value="#{lista.nome}" label="Nome do Patrimônio"/>
                                 <b:dataTableColumn value="#{lista.custo_bem}" label="Custo Bem"/>
-                                <b:dataTableColumn value="" label="Custo da Venda"/>
+                                <b:dataTableColumn value="#{lista.custo_venda}" label="Custo da Venda"/>
                                 <b:dataTableColumn value="#{lista.data_compra}" label="Data da Compra"/>
-                                <b:dataTableColumn value="" label="Situacao"/>
-                                <b:dataTableColumn value="" label="Data da Baixa"/>
+                                <b:dataTableColumn value="#{lista.situacao}" label="Situacao"/>
+                                <b:dataTableColumn value="#{lista.custo_bem}" label="Data da Baixa"/>
                                 <b:dataTableColumn value="#{lista.categoria}" label="Categoria"/>     
-                                <b:dataTableColumn value="" label="Depreciação Acumulada"/>
-                                <b:dataTableColumn value="" label="Valor Contábil"/>
-                                <b:dataTableColumn value="" label="Ganho/Perda"/>
+                                <b:dataTableColumn value="#{lista.depreciacao}" label="Depreciação Acumulada"/>
+                                <b:dataTableColumn value="#{lista.valorContabil}" label="Valor Contábil"/>
+                                <b:dataTableColumn value="#{lista.ganhoPerda}" label="Ganho/Perda"/>
 
 
                                 <b:dataTableColumn label="Opções" style="width: 170px">
                                     <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">
                                         <b:commandButton iconAwesome="minus-circle" value="Baixar" size="sm" class="btn btn-lg"
-                                                         title="Editar Item" look="warning"  action="#{bensBean.editar(lista)}" >
+                                                         title="Editar Item" look="warning"  action="#{bensBean.baixar(lista)}" >
                                         </b:commandButton>
                                     </h:panelGrid>
                                 </b:dataTableColumn>

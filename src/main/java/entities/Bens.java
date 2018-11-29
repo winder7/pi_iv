@@ -20,9 +20,34 @@ public class Bens {
     private Double custo_bem;
     private Double custo_venda;
     
+    private String depreciacao;
+    private String valorContabil;
+    private String ganhoPerda;
+    
     public Bens() {
     }
 
+    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem, Double custo_venda, String depreciacao, String valorContabil, String ganhoPerda) {
+        this.id = id;
+        this.nome = nome;
+        this.data_compra = data_compra;
+        this.data_baixa = data_baixa;
+        this.vida_util = vida_util;
+        this.valor_residual = valor_residual;
+        this.tempo_uso = tempo_uso;
+        this.situacao = situacao;
+        this.categoria = categoria;
+        this.turno_trabalhado = turno_trabalhado;
+        this.fk_Empresa_id = fk_Empresa_id;
+        this.custo_bem = custo_bem;
+        this.custo_venda = custo_venda;
+        this.depreciacao = depreciacao;
+        this.valorContabil = valorContabil;
+        this.ganhoPerda = ganhoPerda;
+    }
+
+    
+    
     public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem, Double custo_venda) {
         this.id = id;
         this.nome = nome;
@@ -66,6 +91,32 @@ public class Bens {
         this.fk_Empresa_id = fk_Empresa_id;
         this.custo_bem = custo_bem;
     }
+
+    public String getDepreciacao() {
+        return depreciacao;
+    }
+
+    public void setDepreciacao(String depreciacao) {
+        this.depreciacao = depreciacao;
+    }
+
+    public String getValorContabil() {
+        return valorContabil;
+    }
+
+    public void setValorContabil(String valorContabil) {
+        this.valorContabil = valorContabil;
+    }
+
+    public String getGanhoPerda() {
+        return ganhoPerda;
+    }
+
+    public void setGanhoPerda(String ganhoPerda) {
+        this.ganhoPerda = ganhoPerda;
+    }
+    
+    
 
     public String getData_baixa() {
         return data_baixa;
