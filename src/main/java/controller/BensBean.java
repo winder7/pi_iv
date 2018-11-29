@@ -77,6 +77,9 @@ public class BensBean {
 
     public void verificaCategoria() {
         this.readonly = (!categoria.equals("Maquina"));
+        if(categoria.equals("Maquina")){
+            this.turno_trabalhado = 1;
+        }
     }
 
     public void add() {
@@ -124,7 +127,6 @@ public class BensBean {
         this.fk_Empresa_id = b.getFk_Empresa_id();
         this.custo_bem = b.getCusto_bem();
 
-        readonly = true;
         botao = "Alterar";
         icone = "fa-refresh";
     }
