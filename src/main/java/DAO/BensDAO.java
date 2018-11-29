@@ -44,7 +44,7 @@ public class BensDAO {
 
         String SQL = "SELECT b.id, b.nome, b.data_compra, b.vida_util, \n"
                 + "b.valor_residual, b.tempo_uso, b.situacao, b.categoria,\n"
-                + "b.turno_trabalhado, b.data_baixa, b.fk_Empresa_id, b.custo_bem FROM bens b\n"
+                + "b.turno_trabalhado, b.data_baixa, b.fk_Empresa_id, b.custo_bem, b.custo_venda FROM bens b\n"
                 + "INNER JOIN empresa e ON (b.fk_Empresa_id = e.id)\n"
                 + "INNER JOIN usuario u ON (u.id_user = e.fk_Usuario_id_user)\n"
                 + "WHERE u.id_user = " + LoginBean.id_logado + " ORDER BY b.id";
@@ -65,7 +65,8 @@ public class BensDAO {
                             rs.getString("categoria"),
                             rs.getInt("turno_trabalhado"),
                             rs.getInt("fk_Empresa_id"),
-                            rs.getDouble("custo_bem")
+                            rs.getDouble("custo_bem"),
+                            rs.getDouble("custo_venda")
                     );
                     bens.add(b);
                 }

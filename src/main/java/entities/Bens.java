@@ -18,11 +18,12 @@ public class Bens {
     private int turno_trabalhado;
     private int fk_Empresa_id;
     private Double custo_bem;
-
+    private Double custo_venda;
+    
     public Bens() {
     }
 
-    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem) {
+    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem, Double custo_venda) {
         this.id = id;
         this.nome = nome;
         this.data_compra = data_compra;
@@ -35,7 +36,9 @@ public class Bens {
         this.turno_trabalhado = turno_trabalhado;
         this.fk_Empresa_id = fk_Empresa_id;
         this.custo_bem = custo_bem;
+        this.custo_venda = custo_venda;
     }
+
 
     public Bens(String nome, String data_compra, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem) {
         this.nome = nome;
@@ -110,6 +113,14 @@ public class Bens {
 
     public void setVida_util(int vida_util) {
         this.vida_util = vida_util;
+    }
+
+    public Double getCusto_venda() {
+        return custo_venda;
+    }
+
+    public void setCusto_venda(Double custo_venda) {
+        this.custo_venda = custo_venda;
     }
 
     public Double getValor_residual() {
