@@ -49,9 +49,21 @@ public class Bens {
         this.fk_Empresa_id = fk_Empresa_id;
         this.custo_bem = custo_bem;
     }
-    
-    
-    
+
+    public Bens(int id, String nome, String data_compra, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem) {
+        this.id = id;
+        this.nome = nome;
+        this.data_compra = data_compra;
+        this.vida_util = vida_util;
+        this.valor_residual = valor_residual;
+        this.tempo_uso = tempo_uso;
+        this.situacao = situacao;
+        this.categoria = categoria;
+        this.turno_trabalhado = turno_trabalhado;
+        this.fk_Empresa_id = fk_Empresa_id;
+        this.custo_bem = custo_bem;
+    }
+
     public String getData_baixa() {
         return data_baixa;
     }
@@ -147,6 +159,5 @@ public class Bens {
     public void setFk_Empresa_id(int fk_Empresa_id) {
         this.fk_Empresa_id = fk_Empresa_id;
     }
-    
-    
+
 }

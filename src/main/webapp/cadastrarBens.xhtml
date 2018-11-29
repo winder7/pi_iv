@@ -98,6 +98,7 @@
                                 </b:dataTableColumn>
 
                                 <b:dataTableColumn value="#{lista.nome}" label="Nome do Patrimônio"/>
+                                <b:dataTableColumn value="#{lista.custo_bem}" label="Custo Bem"/>
                                 <b:dataTableColumn value="#{lista.data_compra}" label="Data da Compra"/>
                                 <b:dataTableColumn value="#{lista.vida_util}" label="Vida Útil"/>
                                 <b:dataTableColumn value="#{lista.valor_residual}" label="Valor Residual"/>
@@ -108,9 +109,9 @@
                                 <b:dataTableColumn label="Opções" style="width: 170px">
                                     <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">
                                         <b:commandButton iconAwesome="trash-o" value="Remover" size="sm" class="btn btn-lg"
-                                                         title="Remover Item" look="danger"   action="#{empresaBean.remover(lista)}"/>
+                                                         title="Remover Item" look="danger"   action="#{bensBean.remover(lista)}"/>
                                         <b:commandButton iconAwesome="edit" value="Editar" size="sm" class="btn btn-lg"
-                                                         title="Editar Item" look="info"  action="#{empresaBean.editar(lista)}" />
+                                                         title="Editar Item" look="info"  action="#{bensBean.editar(lista)}" />
                                     </h:panelGrid>
                                 </b:dataTableColumn>
                             </b:dataTable>

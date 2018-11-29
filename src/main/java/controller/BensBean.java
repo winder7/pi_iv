@@ -2,6 +2,7 @@ package controller;
 
 import DAO.BensDAO;
 import DAO.EmpresaDAO;
+import Util.Formatar;
 import entities.Bens;
 import entities.Empresa;
 import java.util.ArrayList;
@@ -84,20 +85,23 @@ public class BensBean {
     public void add() {
         if (botao.equals("Incluir")) {
             BensDAO bensDAO = new BensDAO();
-            valor_residual = (custo_bem*(valor_residual/100));
+            valor_residual = (custo_bem * (valor_residual / 100));
             Bens b = new Bens(nome, data_compra, vida_util, valor_residual, tempo_uso, "Em uso", categoria, turno_trabalhado, fk_Empresa_id, custo_bem);
             bensDAO.inserirBem(b);
             limpaTela();
             obter();
         } else {
-//            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-//            Disciplina disc = new Disciplina(codigo, nome, situacao, fk_Curso_cod, cod_antigo);
-//            disciplinaDAO.editarDisciplina(disc);
-//            limpaTela();
-//            obter();
-//            botao = "Incluir";
-//            icone = "plus-circle";
-//            readonly = false;
+            BensDAO bensDAO = new BensDAO();
+            valor_residual = (custo_bem * (valor_residual / 100));
+            Bens b = new Bens(this.id, nome, data_compra, vida_util, valor_residual, tempo_uso, this.situacao, categoria, turno_trabalhado, fk_Empresa_id, custo_bem);
+            System.out.println("this.situacao " + this.situacao);
+            System.out.println("this.id " + this.id);
+            bensDAO.editarBem(b);
+            limpaTela();
+            obter();
+            botao = "Incluir";
+            icone = "plus-circle";
+            readonly = false;
         }
     }
 
@@ -106,21 +110,31 @@ public class BensBean {
         return "cadastrarBens";
     }
 
-//    public void editar(Disciplina d) {
-//        cod_antigo = d.getCodigo();
-//        codigo = d.getCodigo();
-//        nome = d.getNome();
-//        situacao = d.getSituacao();
-//        fk_Curso_cod = d.getFk_Curso_cod();
-//        
-//        readonly = true;
-//        botao = "Alterar";
-//        icone = "fa-refresh";
-//    }
+    public void editar(Bens b) {
+        this.readonly = true;
+        this.id = b.getId();
+        this.nome = b.getNome();
+        this.data_compra = Formatar.Data(b.getData_compra(), "dd/MM/yyyy", "yyyy-MM-dd");
+        System.out.println(this.data_compra);
+        this.vida_util = b.getVida_util();
+        this.novo = b.getTempo_uso() == 0;
+        this.valor_residual = (b.getValor_residual() / b.getCusto_bem()) * 100;
+        this.tempo_uso = b.getTempo_uso();
+        this.situacao = b.getSituacao();
+        this.categoria = b.getCategoria();
+        this.turno_trabalhado = b.getTurno_trabalhado();
+        this.fk_Empresa_id = b.getFk_Empresa_id();
+        this.custo_bem = b.getCusto_bem();
+
+        readonly = true;
+        botao = "Alterar";
+        icone = "fa-refresh";
+    }
+
     public void remover(Bens b) {
-//        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-//        disciplinaDAO.removerDisciplina(d);
-//        obter();
+        BensDAO bensDAO = new BensDAO();
+        bensDAO.removerBem(b);
+        obter();
     }
 
     private void setBoxEmpresa() {

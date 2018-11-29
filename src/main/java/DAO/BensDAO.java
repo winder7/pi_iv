@@ -29,7 +29,7 @@ public class BensDAO {
             pstm.setInt(8, bens.getTurno_trabalhado());
             pstm.setInt(9, bens.getFk_Empresa_id());
             pstm.setDouble(10, bens.getCusto_bem());
-            
+
             pstm.execute();
             System.out.println(pstm);
             BD.getConexao().close();
@@ -81,38 +81,46 @@ public class BensDAO {
         return bens;
     }
 
-    public void editarEmpresa(Empresa empresa) {
-        String SQL = "UPDATE empresa SET cnpj = ?, nome = ?, telefone = ?, email = ?, responsavel = ? WHERE id = ?";
+    public void editarBem(Bens b) {
+        String SQL = "UPDATE bens SET nome = ?, data_compra = ?, vida_util = ?, \n"
+                + "valor_residual = ?, tempo_uso = ?, situacao = ?, categoria = ?,\n"
+                + "turno_trabalhado = ?, custo_bem = ?, fk_Empresa_id = ? WHERE id = ?";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
-            pstm.setString(1, empresa.getCnpj());
-            pstm.setString(2, empresa.getNome());
-            pstm.setString(3, empresa.getTelefone());
-            pstm.setString(4, empresa.getEmail());
-            pstm.setString(5, empresa.getResponsavel());
-            pstm.setInt(6, empresa.getId());
+            pstm.setString(1, b.getNome());
+            pstm.setDate(2, java.sql.Date.valueOf(b.getData_compra()));
+            pstm.setInt(3, b.getVida_util());
+            pstm.setDouble(4, b.getValor_residual());
+            pstm.setInt(5, b.getTempo_uso());
+            pstm.setString(6, b.getSituacao());
+            pstm.setString(7, b.getCategoria());
+            pstm.setInt(8, b.getTurno_trabalhado());
+            pstm.setDouble(9, b.getCusto_bem());
+            pstm.setInt(10, b.getFk_Empresa_id());
 
-            System.out.println(SQL);
+            pstm.setInt(11, b.getId());
+
+            System.out.println(pstm);
             pstm.executeUpdate();
 
             pstm.close();
             BD.getConexao().close();
             System.out.println("Alteração efetuada!");
         } catch (Exception ex) {
-            Exibir.MensagemErro("Erro ao Alterar empresa!:\n" + ex);
+            Exibir.MensagemErro("Erro ao Alterar bem!:\n" + ex);
         }
     }
 
-    public void removerEmpresa(Empresa empresa) {
-        String SQL = "DELETE FROM empresa WHERE id = (?)";
+    public void removerBem(Bens b) {
+        String SQL = "DELETE FROM bens WHERE id = (?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
-            pstm.setInt(1, empresa.getId());
+            pstm.setInt(1, b.getId());
 
             pstm.execute();
 
             BD.getConexao().close();
             System.out.println("Removido com sucesso!");
         } catch (Exception ex) {
-            Exibir.MensagemErro("\nErro ao remover empresa: " + ex);
+            Exibir.MensagemErro("\nErro ao remover bem: " + ex);
         }
     }
 }
