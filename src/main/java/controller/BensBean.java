@@ -17,14 +17,14 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class BensBean {
 
-    private boolean readonly = false;
+    private boolean readonly = true;
 
     private int id;
     private String nome;
     private String data_compra;
-    private int vida_util;
-    private boolean novo;
-    private Double valor_residual;
+    private int vida_util = 5;
+    private boolean novo = true;
+    private Double valor_residual = 10.0;
     private int tempo_uso;
     private String situacao;
     private String categoria;
@@ -52,12 +52,24 @@ public class BensBean {
     }
 
     public void limpaTela() {
+    this.readonly = true;
+    this.id = 0;
+    this.nome = null;
+    this.data_compra = null;
+    this.vida_util = 5;
+    this.novo = true;
+    this.valor_residual = 10.0;
+    this.tempo_uso = 0;
+    this.situacao = null;
+    this.categoria = null;
+    this.turno_trabalhado = 0;
+    this.fk_Empresa_id = 0;
+}
 
+public void verificaCategoria() {
+        this.readonly = (!categoria.equals("Maquina"));
     }
 
-    public void teste(){
-        System.out.println(this.novo);
-    }
 //    public void add() {
 //        if (botao.equals("Incluir")) {
 //            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
@@ -109,7 +121,6 @@ public class BensBean {
         }
     }
 
-    //Getters e Seters
     public ArrayList<Empresa> getEmpresa() {
         return empresa;
     }
@@ -245,5 +256,5 @@ public class BensBean {
     public void setIcone(String icone) {
         this.icone = icone;
     }
-    
+
 }

@@ -30,38 +30,36 @@
                             <b:selectOneMenu value="#{bensBean.fk_Empresa_id}" label="Empresa" tiny-screen="half" required="true">
                                 <f:selectItems value="#{bensBean.itensBoxEmpresa.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />
                             </b:selectOneMenu>
+                            <b:inputText value="#{bensBean.nome}" label="Nome" placeholder="Digite o nome do patrimônio" type="text" 
+                                         tiny-screen="half" required="true"/>
                         </b:row>
                         <b:row>
-                            <b:inputText value="#{bensBean.nome}" label="Nome" placeholder="Digite o nome do responsável" type="text" 
-                                         tiny-screen="one-fourth" required="true"/>
                             <b:inputText value="#{bensBean.data_compra}" label="Data da compra" placeholder="Digite o data da compra do bem" type="date" 
-                                         tiny-screen="one-fourth" required="true"/>
+                                         tiny-screen="one-third" required="true"/>
                             <b:touchSpin label="Vida Útil (Anos)" value="#{bensBean.vida_util}" min="1" max="30" step="1" 
-                                         tiny-screen="one-fourth" required="true"/>
+                                         tiny-screen="one-third" required="true"/>
+                            <b:touchSpin label="Taxa Residual %" value="#{bensBean.valor_residual}" min="5" max="50" step="1" 
+                                         tiny-screen="one-third" required="true" >
+                            </b:touchSpin>
+                        </b:row>
+
+                        <b:row>
                             <b:switch value="#{bensBean.novo}" label="Situação" onColor="success" offColor="warning" on-text="Novo" off-text="Usado"
                                       tiny-screen="one-fourth" >
-                                <f:ajax render="form"/>
+                                <f:ajax render="tempo" />
                             </b:switch>
-                        </b:row>
+                            <b:touchSpin id="tempo" disabled="#{bensBean.novo}" label="Tempo de Uso (meses)" value="#{bensBean.tempo_uso}" min="0" max="360" step="1" 
+                                         tiny-screen="one-fourth" required="true"/>
 
-                        <b:row>
-                            <b:inputText id="teste" value="#{bensBean.novo}" label="Nome" placeholder="Digite o nome do responsável" type="text" 
+                            <b:selectOneMenu label="Categoria" tiny-screen="one-fourth" value="#{bensBean.categoria}" required="true">
+                                <f:selectItem itemLabel="Outros" itemValue="Outros" />
+                                <f:selectItem itemLabel="Imóvel" itemValue="Imovel" />
+                                <f:selectItem itemLabel="Máquina" itemValue="Maquina" />
+                                <f:ajax event="change" immediate="false" render="turno" listener="#{bensBean.verificaCategoria()}"/>
+                            </b:selectOneMenu>
+                            <b:touchSpin id="turno" disabled="#{bensBean.readonly}" label="Tempo de Uso (meses)" value="#{bensBean.tempo_uso}" min="0" max="360" step="1" 
                                          tiny-screen="one-fourth" required="true"/>
-                            <b:inputText value="#{bensBean.data_compra}" label="Data da compra" placeholder="Digite o data da compra do bem" type="date" 
-                                         tiny-screen="one-fourth" required="true"/>
-                            <b:touchSpin label="Vida Útil (Anos)" value="#{bensBean.vida_util}" min="1" max="30" step="1" 
-                                         tiny-screen="one-fourth" required="true"/>
-                            <b:switch value="#{bensBean.novo}" label="Situação" onColor="success" offColor="warning" on-text="Novo" off-text="Usado"
-                                      tiny-screen="one-fourth" />
-                        </b:row>
-
-
-                        <b:row>
-                            <b:touchSpin label="Quantidade de turnos trabalhados" rendered="#{bensBean.novo}" value="#{bensBean.turno_trabalhado}" min="1" max="3" step="1" 
-                                         tiny-screen="one-fourth" required="true"/>
-                            <b:touchSpin  rendered="#{bensBean.novo}" label="Tempo de Uso (Meses)" value="#{bensBean.tempo_uso}" min="1" max="360" step="1" 
-                                          tiny-screen="one-fourth" required="true"/>
-                        </b:row>
+                        </b:row>            
 
                         <b:row>
                             <b:commandButton iconAwesome="#{empresaBean.icone}" icon-size="lg" value="#{empresaBean.botao}" class="btn btn-lg btnIncluir" 
