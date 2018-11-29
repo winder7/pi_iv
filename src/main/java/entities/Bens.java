@@ -11,46 +11,47 @@ public class Bens {
     private String data_compra;
     private String data_baixa;
     private int vida_util;
-    private boolean novo;
     private Double valor_residual;
     private int tempo_uso;
     private String situacao;
     private String categoria;
     private int turno_trabalhado;
     private int fk_Empresa_id;
+    private Double custo_bem;
 
     public Bens() {
     }
 
-    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, boolean novo, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id) {
+    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem) {
         this.id = id;
         this.nome = nome;
         this.data_compra = data_compra;
         this.data_baixa = data_baixa;
         this.vida_util = vida_util;
-        this.novo = novo;
         this.valor_residual = valor_residual;
         this.tempo_uso = tempo_uso;
         this.situacao = situacao;
         this.categoria = categoria;
         this.turno_trabalhado = turno_trabalhado;
         this.fk_Empresa_id = fk_Empresa_id;
+        this.custo_bem = custo_bem;
     }
 
-    public Bens(String nome, String data_compra, String data_baixa, int vida_util, boolean novo, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id) {
+    public Bens(String nome, String data_compra, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem) {
         this.nome = nome;
         this.data_compra = data_compra;
-        this.data_baixa = data_baixa;
         this.vida_util = vida_util;
-        this.novo = novo;
         this.valor_residual = valor_residual;
         this.tempo_uso = tempo_uso;
         this.situacao = situacao;
         this.categoria = categoria;
         this.turno_trabalhado = turno_trabalhado;
         this.fk_Empresa_id = fk_Empresa_id;
+        this.custo_bem = custo_bem;
     }
-
+    
+    
+    
     public String getData_baixa() {
         return data_baixa;
     }
@@ -75,6 +76,14 @@ public class Bens {
         this.nome = nome;
     }
 
+    public Double getCusto_bem() {
+        return custo_bem;
+    }
+
+    public void setCusto_bem(Double custo_bem) {
+        this.custo_bem = custo_bem;
+    }
+
     public String getData_compra() {
         return data_compra;
     }
@@ -89,14 +98,6 @@ public class Bens {
 
     public void setVida_util(int vida_util) {
         this.vida_util = vida_util;
-    }
-
-    public boolean isNovo() {
-        return novo;
-    }
-
-    public void setNovo(boolean novo) {
-        this.novo = novo;
     }
 
     public Double getValor_residual() {

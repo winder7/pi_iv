@@ -27,16 +27,22 @@
                 <b:panel title="Cadastar Patrimonio" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
                     <h:form id="form">
                         <b:row>
-                            <b:selectOneMenu value="#{bensBean.fk_Empresa_id}" label="Empresa" tiny-screen="half" required="true">
+                            <b:selectOneMenu value="#{bensBean.fk_Empresa_id}" label="Empresa" tiny-screen="one-third" required="true">
                                 <f:selectItems value="#{bensBean.itensBoxEmpresa.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />
                             </b:selectOneMenu>
                             <b:inputText value="#{bensBean.nome}" label="Nome" placeholder="Digite o nome do patrimônio" type="text" 
-                                         tiny-screen="half" required="true"/>
+                                         tiny-screen="one-third" required="true"/>
+                            <b:inputText value="#{bensBean.custo_bem}" label="Custo do patrimônio" placeholder="Digite o custo do patrimônio" mask="numeric"
+                                         tiny-screen="one-third" required="true" >
+                                <f:facet name="prepend">
+                                    <h:outputText value="R$" />
+                                </f:facet>
+                            </b:inputText>
                         </b:row>
                         <b:row>
                             <b:inputText value="#{bensBean.data_compra}" label="Data da compra" placeholder="Digite o data da compra do bem" type="date" 
                                          tiny-screen="one-third" required="true"/>
-                            <b:touchSpin label="Vida Útil (Anos)" value="#{bensBean.vida_util}" min="1" max="30" step="1" 
+                            <b:touchSpin label="Vida Útil (Anos)" value="#{bensBean.vida_util}" min="5" max="30" step="1" 
                                          tiny-screen="one-third" required="true"/>
                             <b:touchSpin label="Taxa Residual %" value="#{bensBean.valor_residual}" min="5" max="50" step="1" 
                                          tiny-screen="one-third" required="true" >
@@ -48,7 +54,7 @@
                                       tiny-screen="one-fourth" >
                                 <f:ajax render="tempo" />
                             </b:switch>
-                            <b:touchSpin id="tempo" disabled="#{bensBean.novo}" label="Tempo de Uso (meses)" value="#{bensBean.tempo_uso}" min="0" max="360" step="1" 
+                            <b:touchSpin id="tempo" disabled="#{bensBean.novo}" label="Tempo de Uso (meses)" value="#{bensBean.tempo_uso}" min="12" max="360" step="1" 
                                          tiny-screen="one-fourth" required="true"/>
 
                             <b:selectOneMenu label="Categoria" tiny-screen="one-fourth" value="#{bensBean.categoria}" required="true">
@@ -57,39 +63,47 @@
                                 <f:selectItem itemLabel="Máquina" itemValue="Maquina" />
                                 <f:ajax event="change" immediate="false" render="turno" listener="#{bensBean.verificaCategoria()}"/>
                             </b:selectOneMenu>
-                            <b:touchSpin id="turno" disabled="#{bensBean.readonly}" label="Tempo de Uso (meses)" value="#{bensBean.tempo_uso}" min="0" max="360" step="1" 
+                            <b:touchSpin id="turno" disabled="#{bensBean.readonly}" label="Turnos Trabalhados" value="#{bensBean.turno_trabalhado}" min="0" max="3" step="1" 
                                          tiny-screen="one-fourth" required="true"/>
                         </b:row>            
 
                         <b:row>
-                            <b:commandButton iconAwesome="#{empresaBean.icone}" icon-size="lg" value="#{empresaBean.botao}" class="btn btn-lg btnIncluir" 
-                                             title="#{empresaBean.botao}" look="success" action="#{empresaBean.add()}"/>   
+                            <b:commandButton iconAwesome="#{bensBean.icone}" icon-size="lg" value="#{bensBean.botao}" class="btn btn-lg btnIncluir" 
+                                             title="#{bensBean.botao}" look="success" action="#{bensBean.add()}"/>   
                             <b:commandButton iconAwesome="remove" icon-size="lg" value="Cancelar" class="btn btn-lg btnIncluir" 
-                                             title="Cancelar" look="danger" action="#{empresaBean.cancelar()}" immediate="true"/>
+                                             title="Cancelar" look="danger" action="#{bensBean.cancelar()}" immediate="true"/>
                         </b:row>
                     </h:form>
-
-
                     <b:messages/>
                 </b:panel>
             </div>
             <div>
-                <b:panel class="painel3" collapsible="false" title="Cadastradas" iconAwesome="table" icon-size="lg" look="info" rendered="true">
+                <b:panel class="painel3" collapsible="false" title="Cadastrados" iconAwesome="table" icon-size="lg" look="info" rendered="true">
                     <b:form>
                         <b:row style="padding: 15px">
                             <b:dataTable customLangUrl="//cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json" 
                                          class="table table-striped table-bordered" 
-                                         value = "#{empresaBean.empresa}"
+                                         value = "#{bensBean.bens}"
                                          var="lista"
                                          style=" margin-left: auto; margin-right: auto; width: 100%; position: relative;"
-                                         responsive="true">
+                                         responsive="true" >
 
-                                <b:dataTableColumn value="#{lista.cnpj}" label="CNPJ"/>
-                                <b:dataTableColumn value="#{lista.nome}" label="Nome"/>
-                                <b:dataTableColumn value="#{lista.telefone}" label="Telefone"/>
-                                <b:dataTableColumn value="#{lista.email}" label="E-mail"/>
-                                <b:dataTableColumn value="#{lista.responsavel}" label="Responsavel"/>
-                                <b:dataTableColumn style="width: 90px" value="#{lista.data_cadastro}" label="Data de Cadastro"/>                            
+
+                                <b:dataTableColumn  label="Nome Empresa" >
+                                    <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">
+                                        <h:outputLabel value="#{bensBean.itensBoxEmpresa.get(lista.fk_Empresa_id)}"/>
+                                        <b:commandButton iconAwesome="search"  size="sm" class="btn btn-lg"
+                                                         title="Visualizar Empresa" />
+                                    </h:panelGrid>
+                                </b:dataTableColumn>
+
+                                <b:dataTableColumn value="#{lista.nome}" label="Nome do Patrimônio"/>
+                                <b:dataTableColumn value="#{lista.data_compra}" label="Data da Compra"/>
+                                <b:dataTableColumn value="#{lista.vida_util}" label="Vida Útil"/>
+                                <b:dataTableColumn value="#{lista.valor_residual}" label="Valor Residual"/>
+                                <b:dataTableColumn value="#{lista.tempo_uso}" label="Tempo Uso"/>
+                                <b:dataTableColumn value="#{lista.categoria}" label="Categoria"/>
+                                <b:dataTableColumn style="width: 90px" value="#{lista.turno_trabalhado}" label="Turnos Trabalhados"/>                            
 
                                 <b:dataTableColumn label="Opções" style="width: 170px">
                                     <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">

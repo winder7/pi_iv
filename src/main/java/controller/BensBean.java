@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.BensDAO;
 import DAO.EmpresaDAO;
 import entities.Bens;
 import entities.Empresa;
@@ -30,6 +31,7 @@ public class BensBean {
     private String categoria;
     private int turno_trabalhado;
     private int fk_Empresa_id;
+    private Double custo_bem = 0.0;
 
     private ArrayList<Bens> bens;
     private ArrayList<Empresa> empresa;
@@ -45,39 +47,49 @@ public class BensBean {
         setBoxEmpresa();
     }
 
+    public void teste() {
+        System.out.println("TEskjfalkjdsflakj");
+    }
+
     private void obter() {
-//        disciplina.clear();
-//        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-//        disciplina = disciplinaDAO.obterDisciplina();
+        bens.clear();
+        BensDAO bensDAO = new BensDAO();
+        bens = bensDAO.obterBens();
     }
 
     public void limpaTela() {
-    this.readonly = true;
-    this.id = 0;
-    this.nome = null;
-    this.data_compra = null;
-    this.vida_util = 5;
-    this.novo = true;
-    this.valor_residual = 10.0;
-    this.tempo_uso = 0;
-    this.situacao = null;
-    this.categoria = null;
-    this.turno_trabalhado = 0;
-    this.fk_Empresa_id = 0;
-}
+        this.readonly = true;
+        this.id = 0;
+        this.nome = null;
+        this.data_compra = null;
+        this.vida_util = 5;
+        this.novo = true;
+        this.valor_residual = 10.0;
+        this.tempo_uso = 0;
+        this.situacao = null;
+        this.categoria = null;
+        this.turno_trabalhado = 0;
+        this.fk_Empresa_id = 0;
+        this.custo_bem = 0.00;
 
-public void verificaCategoria() {
+        botao = "Incluir";
+        icone = "plus-circle";
+        readonly = false;
+    }
+
+    public void verificaCategoria() {
         this.readonly = (!categoria.equals("Maquina"));
     }
 
-//    public void add() {
-//        if (botao.equals("Incluir")) {
-//            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-//            Disciplina disc = new Disciplina(codigo, nome, situacao, fk_Curso_cod);
-//            disciplinaDAO.inserirDisciplina(disc);
-//            limpaTela();
-//            obter();
-//        } else {
+    public void add() {
+        if (botao.equals("Incluir")) {
+            BensDAO bensDAO = new BensDAO();
+            valor_residual = (custo_bem*(valor_residual/100));
+            Bens b = new Bens(nome, data_compra, vida_util, valor_residual, tempo_uso, "Em uso", categoria, turno_trabalhado, fk_Empresa_id, custo_bem);
+            bensDAO.inserirBem(b);
+            limpaTela();
+            obter();
+        } else {
 //            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 //            Disciplina disc = new Disciplina(codigo, nome, situacao, fk_Curso_cod, cod_antigo);
 //            disciplinaDAO.editarDisciplina(disc);
@@ -86,8 +98,9 @@ public void verificaCategoria() {
 //            botao = "Incluir";
 //            icone = "plus-circle";
 //            readonly = false;
-//        }
-//    }
+        }
+    }
+
     public String cancelar() {
         limpaTela();
         return "cadastrarBens";
@@ -119,6 +132,14 @@ public void verificaCategoria() {
             ItensBoxEmpresa.put(0, "Selecione uma empresa");
             ItensBoxEmpresa.put(empresas.getId(), empresas.getNome());
         }
+    }
+
+    public Double getCusto_bem() {
+        return custo_bem;
+    }
+
+    public void setCusto_bem(Double custo_bem) {
+        this.custo_bem = custo_bem;
     }
 
     public ArrayList<Empresa> getEmpresa() {

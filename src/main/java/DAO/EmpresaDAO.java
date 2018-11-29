@@ -16,7 +16,6 @@ public class EmpresaDAO {
 
     public void inserirEmpresa(Empresa empresa) {
         String SQL = "INSERT INTO empresa(cnpj, nome, telefone, email, responsavel, fk_Usuario_id_user, data_cadastro) VALUES (?,?,?,?,?,?, '" + new Date() + "')";
-        System.out.println(SQL);
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
             pstm.setString(1, empresa.getCnpj());
             pstm.setString(2, empresa.getNome());
@@ -24,7 +23,6 @@ public class EmpresaDAO {
             pstm.setString(4, empresa.getEmail());
             pstm.setString(5, empresa.getResponsavel());
             pstm.setInt(6, empresa.getFk_Usuario_id_user());
-            System.out.println("kask " + pstm);
             pstm.execute();
 
             BD.getConexao().close();
