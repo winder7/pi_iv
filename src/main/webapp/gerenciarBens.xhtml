@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Gerenciar Patrimonio</title>
+        <link rel="shortcut icon" href="resources/img/home.png"/>
+        <link rel="StyleSheet" type="text/css" href="resources/css/cadastrarUsuario.css" media="screen" />
+
+        <script language="JavaScript">
+            if (!#{loginBean.sessao}) {
+                window.location.href = "/pi_iv/login.xhtml";
+            }
+        </script>
+    </h:head>
+    <h:body style=" margin-top: 60px; background-image: url('resources/img/back.png')">
+        <div id="header">
+            <ui:insert name="template" >
+                <ui:include src="/templates/template.xhtml" />
+            </ui:insert>
+        </div>
+        <b:column col-sm="9" offset-sm="3" col-md="10" offset="2">
+            <div>
+                <b:panel title="Gerenciar Patrimonio" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
+                    <h:form id="form">
+                        <b:row>
+                            <b:selectOneMenu value="#{bensBean.fk_Empresa_id}" label="Empresa" tiny-screen="one-third" required="true">
+                                <f:selectItems value="#{bensBean.itensBoxEmpresa.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />
+                            </b:selectOneMenu>
+                        </b:row>
+                    </h:form>
+                    <b:messages/>
+                </b:panel>
+            </div>
+            <div>
+                <b:panel class="painel3" collapsible="false" title="Cadastrados" iconAwesome="table" icon-size="lg" look="info" rendered="true">
+                    <b:form>
+                        <b:row style="padding: 15px">
+                            <b:dataTable customLangUrl="//cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json" 
+                                         class="table table-striped table-bordered" 
+                                         value = "#{bensBean.bens}"
+                                         var="lista"
+                                         style=" margin-left: auto; margin-right: auto; width: 100%; position: relative;"
+                                         responsive="true">
+
+
+                                <b:dataTableColumn value="#{lista.nome}" label="Nome do Patrimônio"/>
+                                <b:dataTableColumn value="#{lista.custo_bem}" label="Custo Bem"/>
+                                <b:dataTableColumn value="" label="Custo da Venda"/>
+                                <b:dataTableColumn value="#{lista.data_compra}" label="Data da Compra"/>
+                                <b:dataTableColumn value="" label="Situacao"/>
+                                <b:dataTableColumn value="" label="Data da Baixa"/>
+                                <b:dataTableColumn value="#{lista.categoria}" label="Categoria"/>     
+                                <b:dataTableColumn value="" label="Depreciação Acumulada"/>
+                                <b:dataTableColumn value="" label="Valor Contábil"/>
+                                <b:dataTableColumn value="" label="Ganho/Perda"/>
+
+
+                                <b:dataTableColumn label="Opções" style="width: 170px">
+                                    <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">
+                                        <b:commandButton iconAwesome="minus-circle" value="Baixar" size="sm" class="btn btn-lg"
+                                                         title="Editar Item" look="warning"  action="#{bensBean.editar(lista)}" >
+                                        </b:commandButton>
+                                    </h:panelGrid>
+                                </b:dataTableColumn>
+                            </b:dataTable>
+                        </b:row>
+                    </b:form>
+                </b:panel>
+            </div>
+        </b:column>
+    </h:body>
+</html>
+
