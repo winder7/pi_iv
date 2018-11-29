@@ -25,7 +25,7 @@
         <b:column col-sm="9" offset-sm="3" col-md="10" offset="2">
             <div>
                 <b:panel title="Cadastar Patrimonio" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
-                    <b:form>
+                    <h:form id="form">
                         <b:row>
                             <b:selectOneMenu value="#{bensBean.fk_Empresa_id}" label="Empresa" tiny-screen="half" required="true">
                                 <f:selectItems value="#{bensBean.itensBoxEmpresa.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />
@@ -40,7 +40,7 @@
                                          tiny-screen="one-fourth" required="true"/>
                             <b:switch value="#{bensBean.novo}" label="Situação" onColor="success" offColor="warning" on-text="Novo" off-text="Usado"
                                       tiny-screen="one-fourth" >
-                                <f:ajax render="tempouso"/>
+                                <f:ajax render="form"/>
                             </b:switch>
                         </b:row>
 
@@ -55,11 +55,12 @@
                                       tiny-screen="one-fourth" />
                         </b:row>
 
+
                         <b:row>
-                            <b:touchSpin id="tempouso2" label="Quantidade de turnos trabalhados" rendered="#{bensBean.novo}" value="#{bensBean.turno_trabalhado}" min="1" max="3" step="1" 
+                            <b:touchSpin label="Quantidade de turnos trabalhados" rendered="#{bensBean.novo}" value="#{bensBean.turno_trabalhado}" min="1" max="3" step="1" 
                                          tiny-screen="one-fourth" required="true"/>
-                            <b:touchSpin id="tempouso" rendered="#{bensBean.novo}" label="Tempo de Uso (Meses)" value="#{bensBean.tempo_uso}" min="1" max="360" step="1" 
-                                         tiny-screen="one-fourth" required="true"/>
+                            <b:touchSpin  rendered="#{bensBean.novo}" label="Tempo de Uso (Meses)" value="#{bensBean.tempo_uso}" min="1" max="360" step="1" 
+                                          tiny-screen="one-fourth" required="true"/>
                         </b:row>
 
                         <b:row>
@@ -68,7 +69,9 @@
                             <b:commandButton iconAwesome="remove" icon-size="lg" value="Cancelar" class="btn btn-lg btnIncluir" 
                                              title="Cancelar" look="danger" action="#{empresaBean.cancelar()}" immediate="true"/>
                         </b:row>
-                    </b:form>
+                    </h:form>
+
+
                     <b:messages/>
                 </b:panel>
             </div>
