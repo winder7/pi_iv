@@ -47,7 +47,7 @@ public class BensDAO {
                 + "b.turno_trabalhado, b.data_baixa, b.fk_Empresa_id, b.custo_bem FROM bens b\n"
                 + "INNER JOIN empresa e ON (b.fk_Empresa_id = e.id)\n"
                 + "INNER JOIN usuario u ON (u.id_user = e.fk_Usuario_id_user)\n"
-                + "WHERE e.id = " + LoginBean.id_logado + " ORDER BY b.id";
+                + "WHERE u.id_user = " + LoginBean.id_logado + " ORDER BY b.id";
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 

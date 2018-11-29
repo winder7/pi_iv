@@ -19,7 +19,7 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class BensBean {
 
-    private boolean readonly = true;
+    private boolean readonly;
 
     private int id;
     private String nome;
@@ -46,10 +46,7 @@ public class BensBean {
         this.empresa = new ArrayList<>();
         obter();
         setBoxEmpresa();
-    }
-
-    public void teste() {
-        System.out.println("TEskjfalkjdsflakj");
+        this.readonly = true;
     }
 
     private void obter() {
@@ -111,17 +108,18 @@ public class BensBean {
     }
 
     public void editar(Bens b) {
-        this.readonly = true;
         this.id = b.getId();
         this.nome = b.getNome();
         this.data_compra = Formatar.Data(b.getData_compra(), "dd/MM/yyyy", "yyyy-MM-dd");
-        System.out.println(this.data_compra);
         this.vida_util = b.getVida_util();
         this.novo = b.getTempo_uso() == 0;
         this.valor_residual = (b.getValor_residual() / b.getCusto_bem()) * 100;
         this.tempo_uso = b.getTempo_uso();
         this.situacao = b.getSituacao();
         this.categoria = b.getCategoria();
+        System.out.println(this.categoria);
+        this.readonly = !this.categoria.equals("Maquina");
+        System.out.println(this.readonly);
         this.turno_trabalhado = b.getTurno_trabalhado();
         this.fk_Empresa_id = b.getFk_Empresa_id();
         this.custo_bem = b.getCusto_bem();

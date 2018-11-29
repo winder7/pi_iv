@@ -68,6 +68,36 @@ public class EmpresaDAO {
         return empresa;
     }
 
+     public Empresa visualizarEmpresa(int id) {
+
+        Empresa empresa = null;
+
+        String SQL = "SELECT * FROM empresa WHERE id = " + id;
+        try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
+
+            try (ResultSet rs = pstm.executeQuery()) {
+                while (rs.next()) {
+                    empresa = new Empresa(
+                            rs.getInt("id"),
+                            rs.getString("cnpj"),
+                            rs.getString("nome"),
+                            rs.getString("telefone"),
+                            rs.getString("email"),
+                            rs.getString("responsavel"),
+                            Formatar.data(rs.getDate("data_cadastro"), "dd/MM/yyyy"),
+                            rs.getInt("fk_Usuario_id_user")
+                    );
+                }
+                pstm.close();
+            }
+            System.out.println("Visualizar Empresas obtidas com sucesso!");
+        } catch (Exception ex) {
+            Exibir.MensagemErro("Erro ao obter Empresa!: \n" + ex);
+        }
+
+        return empresa;
+    }
+    
     public void editarEmpresa(Empresa empresa) {
         String SQL = "UPDATE empresa SET cnpj = ?, nome = ?, telefone = ?, email = ?, responsavel = ? WHERE id = ?";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
