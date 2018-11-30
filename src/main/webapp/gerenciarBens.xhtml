@@ -81,7 +81,7 @@
                                 <b:dataTableColumn value="#{lista.categoria}" label="Categoria"/>     
                                 <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.depreciacao)}" label="Depreciação Acumulada"/>
                                 <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.valorContabil)}" label="Valor Contábil"/>
-                                <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.ganhoPerda)}" label="Ganho/Perda"/>
+                                <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.ganhoPerda)}" label="Ganho/Perda" content-style="#{relatorioBensBean.formatarCor(lista.ganhoPerda)}"/>
 
 
                                 <b:dataTableColumn label="Opções" style="width: 170px">

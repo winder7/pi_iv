@@ -5,6 +5,7 @@ import Util.Formatar;
 import Util.Obter;
 import controller.LoginBean;
 import entities.Bens;
+import entities.Empresa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
