@@ -52,7 +52,7 @@ public class RelatorioBensBean {
     public void obter() {
         bens.clear();
         BensDAO bensDAO = new BensDAO();
-        bens = bensDAO.calcularBens(fk_Empresa_id);
+        bens = bensDAO.calcularBensRel(fk_Empresa_id);
     }
 
     public void limpaTela() {
@@ -150,6 +150,17 @@ public class RelatorioBensBean {
     
     public String formatarNumero(double num){
         return String.format("R$ " + "%,.2f", num);
+    }
+    
+    public String formatarCor(double num){
+        String cor = "";
+        
+        if (num <= 0) {
+            cor = "color:red";
+        }else{
+            cor = "color:blue";
+        }
+        return cor;
     }
 
     //gets setters

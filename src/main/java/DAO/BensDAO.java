@@ -8,6 +8,7 @@ import entities.Bens;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -82,7 +83,7 @@ public class BensDAO {
     }
 
     public ArrayList<Bens> calcularBens(int id_empresa) {
-        
+
         String id_emp = " AND b.fk_Empresa_id = " + id_empresa;
 
         ArrayList<Bens> bens = new ArrayList<>();
@@ -123,6 +124,74 @@ public class BensDAO {
                             rs.getString("nome"),
                             Formatar.data(rs.getDate("data_compra"), "dd/MM/yyyy"),
                             Formatar.data(rs.getDate("data_baixa"), "dd/MM/yyyy"),
+                            rs.getInt("vida_util"),
+                            rs.getDouble("valor_residual"),
+                            rs.getInt("tempo_uso"),
+                            rs.getString("situacao"),
+                            rs.getString("categoria"),
+                            rs.getInt("turno_trabalhado"),
+                            rs.getInt("fk_Empresa_id"),
+                            rs.getDouble("custo_bem"),
+                            rs.getDouble("custo_venda"),
+                            depreciacao,
+                            valorContabil,
+                            ganhoPerda
+                    );
+                    bens.add(b);
+                }
+                pstm.close();
+            }
+            System.out.println("Bens obtidos e calculados com sucesso!");
+        } catch (Exception ex) {
+            Exibir.MensagemErro("Erro ao calcular bens!: \n" + ex);
+        }
+
+        return bens;
+    }
+
+    public ArrayList<Bens> calcularBensRel(int id_empresa) {
+
+        String id_emp = id_empresa == 0 ? "" : " AND b.fk_Empresa_id = " + id_empresa;
+
+        ArrayList<Bens> bens = new ArrayList<>();
+
+        String SQL = "SELECT b.id, b.nome, b.data_compra, b.vida_util, \n"
+                + "b.valor_residual, b.tempo_uso, b.situacao, b.categoria,\n"
+                + "b.turno_trabalhado, b.data_baixa, b.fk_Empresa_id, b.custo_bem, b.custo_venda FROM bens b\n"
+                + "INNER JOIN empresa e ON (b.fk_Empresa_id = e.id)\n"
+                + "INNER JOIN usuario u ON (u.id_user = e.fk_Usuario_id_user)\n"
+                + "WHERE u.id_user = " + LoginBean.id_logado + id_emp + " ORDER BY b.id, b.situacao";
+
+        try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
+
+            Date date = new Date();
+
+            try (ResultSet rs = pstm.executeQuery()) {
+                while (rs.next()) {
+                    double depreciacao = 0.0;
+                    double valorContabil = 0.0;
+                    double ganhoPerda = 0.0;
+                    String data_Compra = rs.getString("data_compra");
+                    String data_baixa = Formatar.data(date, "yyyy-MM-dd");
+                    double vida_util = rs.getInt("vida_util");
+                    int tempo_uso = rs.getInt("tempo_uso");
+                    int turno_trabalhado = rs.getInt("turno_trabalhado");
+                    double custo_bem = rs.getDouble("custo_bem");
+                    double valor_residual = rs.getDouble("valor_residual");
+                    double custo_baixa = rs.getDouble("custo_venda");
+
+                    int periodo = Obter.Periodo(data_Compra, data_baixa);
+                    double taxa = Obter.Taxa(vida_util, tempo_uso, turno_trabalhado);
+                    depreciacao = Obter.Depreciacao(custo_bem, valor_residual, taxa, periodo);
+                    valorContabil = Obter.ValorContabil(custo_bem, depreciacao);
+                    ganhoPerda = Obter.GanhoPerda(custo_baixa, valorContabil);
+                    System.out.println("Teste");
+
+                    Bens b = new Bens(
+                            rs.getInt("id"),
+                            rs.getString("nome"),
+                            Formatar.data(rs.getDate("data_compra"), "dd/MM/yyyy"),
+                            Formatar.data(date, "dd/MM/yyyy"),
                             rs.getInt("vida_util"),
                             rs.getDouble("valor_residual"),
                             rs.getInt("tempo_uso"),
