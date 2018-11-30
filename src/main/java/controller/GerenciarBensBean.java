@@ -126,6 +126,8 @@ public class GerenciarBensBean {
         this.situacao = b.getSituacao();
         this.custo_venda = b.getCusto_venda();
 
+        this.editarValor = this.situacao.equals("Vendido");
+                
         baixarEmpresa = true;
     }
 
