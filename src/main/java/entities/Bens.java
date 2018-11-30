@@ -11,23 +11,22 @@ public class Bens {
     private String data_compra;
     private String data_baixa;
     private int vida_util;
-    private Double valor_residual;
+    private double valor_residual;
     private int tempo_uso;
     private String situacao;
     private String categoria;
     private int turno_trabalhado;
     private int fk_Empresa_id;
-    private Double custo_bem;
-    private Double custo_venda;
-    
-    private String depreciacao;
-    private String valorContabil;
-    private String ganhoPerda;
+    private double custo_bem;
+    private double custo_venda;
+    private double depreciacao;
+    private double valorContabil;
+    private double ganhoPerda;
     
     public Bens() {
     }
 
-    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem, Double custo_venda, String depreciacao, String valorContabil, String ganhoPerda) {
+    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda, double depreciacao, double valorContabil, double ganhoPerda) {
         this.id = id;
         this.nome = nome;
         this.data_compra = data_compra;
@@ -48,7 +47,7 @@ public class Bens {
 
     
     
-    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem, Double custo_venda) {
+    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda) {
         this.id = id;
         this.nome = nome;
         this.data_compra = data_compra;
@@ -65,7 +64,7 @@ public class Bens {
     }
 
 
-    public Bens(String nome, String data_compra, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem) {
+    public Bens(String nome, String data_compra, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem) {
         this.nome = nome;
         this.data_compra = data_compra;
         this.vida_util = vida_util;
@@ -78,7 +77,7 @@ public class Bens {
         this.custo_bem = custo_bem;
     }
 
-    public Bens(int id, String nome, String data_compra, int vida_util, Double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, Double custo_bem) {
+    public Bens(int id, String nome, String data_compra, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem) {
         this.id = id;
         this.nome = nome;
         this.data_compra = data_compra;
@@ -90,40 +89,6 @@ public class Bens {
         this.turno_trabalhado = turno_trabalhado;
         this.fk_Empresa_id = fk_Empresa_id;
         this.custo_bem = custo_bem;
-    }
-
-    public String getDepreciacao() {
-        return depreciacao;
-    }
-
-    public void setDepreciacao(String depreciacao) {
-        this.depreciacao = depreciacao;
-    }
-
-    public String getValorContabil() {
-        return valorContabil;
-    }
-
-    public void setValorContabil(String valorContabil) {
-        this.valorContabil = valorContabil;
-    }
-
-    public String getGanhoPerda() {
-        return ganhoPerda;
-    }
-
-    public void setGanhoPerda(String ganhoPerda) {
-        this.ganhoPerda = ganhoPerda;
-    }
-    
-    
-
-    public String getData_baixa() {
-        return data_baixa;
-    }
-
-    public void setData_baixa(String data_baixa) {
-        this.data_baixa = data_baixa;
     }
 
     public int getId() {
@@ -142,20 +107,20 @@ public class Bens {
         this.nome = nome;
     }
 
-    public Double getCusto_bem() {
-        return custo_bem;
-    }
-
-    public void setCusto_bem(Double custo_bem) {
-        this.custo_bem = custo_bem;
-    }
-
     public String getData_compra() {
         return data_compra;
     }
 
     public void setData_compra(String data_compra) {
         this.data_compra = data_compra;
+    }
+
+    public String getData_baixa() {
+        return data_baixa;
+    }
+
+    public void setData_baixa(String data_baixa) {
+        this.data_baixa = data_baixa;
     }
 
     public int getVida_util() {
@@ -166,19 +131,11 @@ public class Bens {
         this.vida_util = vida_util;
     }
 
-    public Double getCusto_venda() {
-        return custo_venda;
-    }
-
-    public void setCusto_venda(Double custo_venda) {
-        this.custo_venda = custo_venda;
-    }
-
-    public Double getValor_residual() {
+    public double getValor_residual() {
         return valor_residual;
     }
 
-    public void setValor_residual(Double valor_residual) {
+    public void setValor_residual(double valor_residual) {
         this.valor_residual = valor_residual;
     }
 
@@ -222,4 +179,43 @@ public class Bens {
         this.fk_Empresa_id = fk_Empresa_id;
     }
 
+    public double getCusto_bem() {
+        return custo_bem;
+    }
+
+    public void setCusto_bem(double custo_bem) {
+        this.custo_bem = custo_bem;
+    }
+
+    public double getCusto_venda() {
+        return custo_venda;
+    }
+
+    public void setCusto_venda(double custo_venda) {
+        this.custo_venda = custo_venda;
+    }
+
+    public double getDepreciacao() {
+        return depreciacao;
+    }
+
+    public void setDepreciacao(double depreciacao) {
+        this.depreciacao = depreciacao;
+    }
+
+    public double getValorContabil() {
+        return valorContabil;
+    }
+
+    public void setValorContabil(double valorContabil) {
+        this.valorContabil = valorContabil;
+    }
+
+    public double getGanhoPerda() {
+        return ganhoPerda;
+    }
+
+    public void setGanhoPerda(double ganhoPerda) {
+        this.ganhoPerda = ganhoPerda;
+    }
 }

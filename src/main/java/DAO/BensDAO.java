@@ -131,9 +131,9 @@ public class BensDAO {
                             rs.getInt("fk_Empresa_id"),
                             rs.getDouble("custo_bem"),
                             rs.getDouble("custo_venda"),
-                            String.format("%.2f", depreciacao),
-                            String.format("%.2f", valorContabil),
-                            String.format("%.2f", ganhoPerda)
+                            depreciacao,
+                            valorContabil,
+                            ganhoPerda
                     );
                     bens.add(b);
                 }
