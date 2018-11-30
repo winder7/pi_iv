@@ -33,6 +33,10 @@
                                 <f:ajax event="change" immediate="false" render="Tabela" listener="#{relatorioBensBean.obter()}"/>
                             </b:selectOneMenu>
                         </b:row>
+                        <b:row>
+                            <b:commandButton iconAwesome="file-pdf-o" icon-size="lg" value="Gerar Relatório" class="btn btn-lg btnIncluir" 
+                                             title="Gerar Relatório PDF" look="danger" action="#{relatorioBensBean.gerarRelatorio()}" ajax="false" onclick="this.form.target = '_blank'"/>
+                        </b:row>
                     </h:form>
                     <b:messages/>
                 </b:panel>

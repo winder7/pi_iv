@@ -3,6 +3,7 @@ package controller;
 import DAO.BensDAO;
 import DAO.EmpresaDAO;
 import Util.Formatar;
+import Util.Relatorio;
 import entities.Bens;
 import entities.Empresa;
 import java.util.ArrayList;
@@ -161,6 +162,11 @@ public class RelatorioBensBean {
             cor = "color:blue";
         }
         return cor;
+    }
+    
+    public void gerarRelatorio(){
+        Relatorio gerar = new Relatorio();
+        gerar.getRelatorio(bens);
     }
 
     //gets setters
