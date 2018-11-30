@@ -22,8 +22,15 @@ public class Bens {
     private double depreciacao;
     private double valorContabil;
     private double ganhoPerda;
-    
+
     public Bens() {
+    }
+
+    public Bens(int id, String data_baixa, String situacao, double custo_venda) {
+        this.id = id;
+        this.data_baixa = data_baixa;
+        this.situacao = situacao;
+        this.custo_venda = custo_venda;
     }
 
     public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda, double depreciacao, double valorContabil, double ganhoPerda) {
@@ -45,8 +52,6 @@ public class Bens {
         this.ganhoPerda = ganhoPerda;
     }
 
-    
-    
     public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda) {
         this.id = id;
         this.nome = nome;
@@ -62,7 +67,6 @@ public class Bens {
         this.custo_bem = custo_bem;
         this.custo_venda = custo_venda;
     }
-
 
     public Bens(String nome, String data_compra, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem) {
         this.nome = nome;

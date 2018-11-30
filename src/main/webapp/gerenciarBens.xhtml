@@ -27,12 +27,35 @@
             <div>
                 <b:panel title="Gerenciar Patrimonio" collapsible="true" look="info" iconAwesome="sitemap" icon-size="lg" >
                     <h:form id="form">
-                        <b:row>
+                        <b:row rendered="#{!gerenciarBensBean.baixarEmpresa}">
                             <b:selectOneMenu value="#{gerenciarBensBean.fk_Empresa_id}" label="Empresa" tiny-screen="one-third" required="true">
                                 <f:selectItems value="#{gerenciarBensBean.itensBoxEmpresa.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />
                                 <f:ajax event="change" immediate="false" render="Tabela" listener="#{gerenciarBensBean.obter()}"/>
                             </b:selectOneMenu>
                         </b:row>
+
+                        <b:row rendered="#{gerenciarBensBean.baixarEmpresa}">
+                            <b:inputText tiny-screen="one-fourth" label="Nome do Patrimônio" value="#{gerenciarBensBean.nome}" readonly="true"/>
+                            <b:selectOneMenu label="Situação" tiny-screen="one-fourth" value="#{gerenciarBensBean.situacao}" required="true">
+                                <f:selectItem itemLabel="Em Uso" itemValue="Em Uso" />
+                                <f:selectItem itemLabel="Sinistro" itemValue="Sinistro" />
+                                <f:selectItem itemLabel="Vendido" itemValue="Vendido" />
+                                <f:selectItem itemLabel="Doado" itemValue="Doado" />
+                                <f:ajax render="valor" listener="#{gerenciarBensBean.verificaSituacao()}"/>
+                                <f:ajax render="data" listener="#{gerenciarBensBean.verificaData()}"/>
+                            </b:selectOneMenu>
+                            <b:inputText id="valor" readonly="#{!gerenciarBensBean.editarValor}" value="#{gerenciarBensBean.custo_venda}" label="Valor da Venda" placeholder="R$ 0.00" mask="numeric"
+                                         tiny-screen="one-fourth" required="true" />
+                            <b:inputText id="data" readonly="#{gerenciarBensBean.emUso}" value="#{gerenciarBensBean.data_baixa}" label="#{gerenciarBensBean.labelData}" type="date" 
+                                         tiny-screen="one-fourth" required="true"/>
+                        </b:row>
+                        <b:row>
+                            <b:commandButton rendered="#{gerenciarBensBean.baixarEmpresa}" iconAwesome="floppy-o" icon-size="lg" value="Salvar" class="btn btn-lg btnIncluir" 
+                                             title="Salvar" look="success" action="#{gerenciarBensBean.salvar()}"/>  
+                            <b:commandButton rendered="#{gerenciarBensBean.baixarEmpresa}" iconAwesome="remove" icon-size="lg" value="Cancelar" class="btn btn-lg btnIncluir" 
+                                             title="Cancelar" look="danger" action="#{gerenciarBensBean.cancelar()}" immediate="true"/>
+                        </b:row>
+
                     </h:form>
                     <b:messages/>
                 </b:panel>
@@ -64,7 +87,7 @@
                                 <b:dataTableColumn label="Opções" style="width: 170px">
                                     <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">
                                         <b:commandButton iconAwesome="minus-circle" value="Baixar" size="sm" class="btn btn-lg"
-                                                         title="Editar Item" look="warning"  action="#{bensBean.baixar(lista)}" >
+                                                         title="Editar Item" look="warning"  action="#{gerenciarBensBean.baixar(lista)}" >
                                         </b:commandButton>
                                     </h:panelGrid>
                                 </b:dataTableColumn>

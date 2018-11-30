@@ -244,6 +244,24 @@ public class BensDAO {
         }
     }
 
+    public void baixarBem(Bens b) {
+        String SQL = "UPDATE bens SET situacao = ?, custo_venda = ?, data_baixa = ? WHERE id = ?";
+        try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
+            pstm.setString(1, b.getSituacao());
+            pstm.setDouble(2, b.getCusto_venda());
+            pstm.setDate(3, java.sql.Date.valueOf(b.getData_baixa()));
+            pstm.setInt(4, b.getId());
+
+            pstm.executeUpdate();
+
+            pstm.close();
+            BD.getConexao().close();
+            System.out.println("Baixa de bem efetuada!");
+        } catch (Exception ex) {
+            Exibir.MensagemErro("Erro ao Baixar bem!:\n" + ex);
+        }
+    }
+    
     public void removerBem(Bens b) {
         String SQL = "DELETE FROM bens WHERE id = (?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
