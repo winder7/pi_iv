@@ -147,6 +147,10 @@ public class BensBean {
             ItensBoxEmpresa.put(empresas.getId(), empresas.getNome());
         }
     }
+    
+    public String numberFormat(double num){
+        return String.format("R$ " + "%,.2f", num);
+    }
 
     //gets setters
     public Double getCusto_bem() {
