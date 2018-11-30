@@ -45,15 +45,14 @@ public class GerenciarBensBean {
     public GerenciarBensBean() {
         this.bens = new ArrayList<>();
         this.empresa = new ArrayList<>();
-        obter();
         setBoxEmpresa();
         this.readonly = true;
     }
 
-    private void obter() {
+    public void obter() {
         bens.clear();
         BensDAO bensDAO = new BensDAO();
-        bens = bensDAO.calcularBens();
+        bens = bensDAO.calcularBens(fk_Empresa_id);
     }
 
     public void limpaTela() {

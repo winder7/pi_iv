@@ -81,7 +81,9 @@ public class BensDAO {
         return bens;
     }
 
-    public ArrayList<Bens> calcularBens() {
+    public ArrayList<Bens> calcularBens(int id_empresa) {
+        
+        String id_emp = " AND b.fk_Empresa_id = " + id_empresa;
 
         ArrayList<Bens> bens = new ArrayList<>();
 
@@ -90,7 +92,7 @@ public class BensDAO {
                 + "b.turno_trabalhado, b.data_baixa, b.fk_Empresa_id, b.custo_bem, b.custo_venda FROM bens b\n"
                 + "INNER JOIN empresa e ON (b.fk_Empresa_id = e.id)\n"
                 + "INNER JOIN usuario u ON (u.id_user = e.fk_Usuario_id_user)\n"
-                + "WHERE u.id_user = " + LoginBean.id_logado + " ORDER BY b.id, b.situacao";
+                + "WHERE u.id_user = " + LoginBean.id_logado + id_emp + " ORDER BY b.id, b.situacao";
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
@@ -116,7 +118,6 @@ public class BensDAO {
                         ganhoPerda = Obter.GanhoPerda(custo_baixa, valorContabil);
                         System.out.println("Teste");
                     }
-                    System.out.println("passei aqui");
                     Bens b = new Bens(
                             rs.getInt("id"),
                             rs.getString("nome"),
