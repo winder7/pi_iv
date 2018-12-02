@@ -5,7 +5,6 @@ import Util.Formatar;
 import Util.Obter;
 import controller.LoginBean;
 import entities.Bens;
-import entities.Empresa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -103,6 +102,7 @@ public class BensDAO {
                     double depreciacao = 0.0;
                     double valorContabil = 0.0;
                     double ganhoPerda = 0.0;
+                    double percentDepr = 0.0;
                     if (rs.getString("data_baixa") != null) {
                         String data_Compra = rs.getString("data_compra");
                         String data_baixa = rs.getString("data_baixa");
@@ -116,9 +116,11 @@ public class BensDAO {
                         int periodo = Obter.Periodo(data_Compra, data_baixa);
                         double taxa = Obter.Taxa(vida_util, tempo_uso, turno_trabalhado);
                         depreciacao = Obter.Depreciacao(custo_bem, valor_residual, taxa, periodo);
+                        depreciacao = depreciacao < (custo_bem - valor_residual) ? depreciacao : (custo_bem - valor_residual);
+                        System.out.println("P: " + periodo + " | " + "V: " + vida_util + " | " + Obter.RealVidaUtil(vida_util, tempo_uso));
                         valorContabil = Obter.ValorContabil(custo_bem, depreciacao);
                         ganhoPerda = Obter.GanhoPerda(custo_baixa, valorContabil);
-                        System.out.println("Teste");
+                        percentDepr = (depreciacao / (custo_bem - valor_residual)) * 100;
                     }
                     Bens b = new Bens(
                             rs.getInt("id"),
@@ -136,7 +138,8 @@ public class BensDAO {
                             rs.getDouble("custo_venda"),
                             depreciacao,
                             valorContabil,
-                            ganhoPerda
+                            ganhoPerda,
+                            percentDepr
                     );
                     bens.add(b);
                 }
@@ -174,7 +177,7 @@ public class BensDAO {
                     double valorContabil = 0.0;
                     double ganhoPerda = 0.0;
                     String data_Compra = rs.getString("data_compra");
-                    String data_baixa = Formatar.data(date, "yyyy-MM-dd");
+                    String data_baixa = rs.getString("data_baixa") != null ? rs.getString("data_baixa") : Formatar.data(date, "yyyy-MM-dd");
                     double vida_util = rs.getInt("vida_util");
                     int tempo_uso = rs.getInt("tempo_uso");
                     int turno_trabalhado = rs.getInt("turno_trabalhado");
@@ -187,13 +190,13 @@ public class BensDAO {
                     depreciacao = Obter.Depreciacao(custo_bem, valor_residual, taxa, periodo);
                     valorContabil = Obter.ValorContabil(custo_bem, depreciacao);
                     ganhoPerda = Obter.GanhoPerda(custo_baixa, valorContabil);
-                    System.out.println("Teste");
+                    System.out.println("Teste" + rs.getString("data_baixa"));
 
                     Bens b = new Bens(
                             rs.getInt("id"),
                             rs.getString("nome"),
                             Formatar.data(rs.getDate("data_compra"), "dd/MM/yyyy"),
-                            Formatar.data(date, "dd/MM/yyyy"),
+                            data_baixa,
                             rs.getInt("vida_util"),
                             rs.getDouble("valor_residual"),
                             rs.getInt("tempo_uso"),
@@ -267,7 +270,7 @@ public class BensDAO {
             Exibir.MensagemErro("Erro ao Baixar bem!:\n" + ex);
         }
     }
-    
+
     public void removerBem(Bens b) {
         String SQL = "DELETE FROM bens WHERE id = (?)";
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {

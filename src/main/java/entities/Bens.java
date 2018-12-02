@@ -26,6 +26,7 @@ public class Bens {
     private String responsavel;
     private String telefone;
     private String email;
+    private double percentDepr;
 
     public Bens() {
     }
@@ -37,7 +38,7 @@ public class Bens {
         this.custo_venda = custo_venda;
     }
 
-    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda, double depreciacao, double valorContabil, double ganhoPerda) {
+    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda, double depreciacao, double valorContabil, double ganhoPerda,double percentDepr) {
         this.id = id;
         this.nome = nome;
         this.data_compra = data_compra;
@@ -54,6 +55,7 @@ public class Bens {
         this.depreciacao = depreciacao;
         this.valorContabil = valorContabil;
         this.ganhoPerda = ganhoPerda;
+        this.percentDepr = percentDepr;
     }
 
     public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda) {
@@ -120,6 +122,30 @@ public class Bens {
         this.responsavel = responsavel;
         this.telefone = telefone;
         this.email = email;
+    }
+
+    public Bens(int id, String nome, String data_compra, String data_baixa, int vida_util, double valor_residual, int tempo_uso, String situacao, String categoria, int turno_trabalhado, int fk_Empresa_id, double custo_bem, double custo_venda, double depreciacao, double valorContabil, double ganhoPerda, String nome_empresa, String responsavel, String telefone, String email, double percentDepr) {
+        this.id = id;
+        this.nome = nome;
+        this.data_compra = data_compra;
+        this.data_baixa = data_baixa;
+        this.vida_util = vida_util;
+        this.valor_residual = valor_residual;
+        this.tempo_uso = tempo_uso;
+        this.situacao = situacao;
+        this.categoria = categoria;
+        this.turno_trabalhado = turno_trabalhado;
+        this.fk_Empresa_id = fk_Empresa_id;
+        this.custo_bem = custo_bem;
+        this.custo_venda = custo_venda;
+        this.depreciacao = depreciacao;
+        this.valorContabil = valorContabil;
+        this.ganhoPerda = ganhoPerda;
+        this.nome_empresa = nome_empresa;
+        this.responsavel = responsavel;
+        this.telefone = telefone;
+        this.email = email;
+        this.percentDepr = percentDepr;
     }
 
     public int getId() {
@@ -280,5 +306,13 @@ public class Bens {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public double getPercentDepr() {
+        return percentDepr;
+    }
+
+    public void setPercentDepr(double percentDepr) {
+        this.percentDepr = percentDepr;
     }
 }

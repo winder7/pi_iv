@@ -53,6 +53,19 @@ public class Obter {
         return taxa;
     }
     
+    public static double RealVidaUtil(double vidaUtil, int tempoUso) {
+
+        double realVidaUtil = 0.0;
+        try {
+            tempoUso = tempoUso / 12;
+            realVidaUtil = (vidaUtil - tempoUso) < (vidaUtil / 2) ? (vidaUtil / 2) : vidaUtil - tempoUso;
+        } catch (Exception ex) {
+            System.out.println("ERRO ao calcular real vida util: " + ex);
+        }
+
+        return realVidaUtil * 12;
+    }
+    
     public static double GanhoPerda(double custoBaixa, double valorContabil) {
         return  custoBaixa - valorContabil;
     }

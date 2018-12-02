@@ -116,7 +116,8 @@ public class GerenciarBensBean {
         BensDAO bensDAO = new BensDAO();
         Bens b = new Bens(this.id, this.data_baixa, this.situacao, this.custo_venda);
         bensDAO.baixarBem(b);
-        limpaTela();
+        baixarEmpresa = false;
+        obter();
     }
 
     public void baixar(Bens b) {
@@ -150,6 +151,10 @@ public class GerenciarBensBean {
 
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
+    }
+    
+    public String formatarPercent(double num) {
+        return String.format("%,.1f", num);
     }
 
     //gets setters

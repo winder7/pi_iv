@@ -78,17 +78,14 @@
                                 <b:dataTableColumn value="#{lista.situacao}" label="Situacao"/>
                                 <b:dataTableColumn value="#{lista.data_baixa}" label="Data da Baixa"/>
                                 <b:dataTableColumn value="#{lista.categoria}" label="Categoria"/>     
-                                <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.depreciacao)}" label="Depreciação Acumulada"/>
+                                <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.depreciacao)} (#{gerenciarBensBean.formatarPercent(lista.percentDepr)}%)" label="Depreciação Acumulada"/>
                                 <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.valorContabil)}" label="Valor Contábil"/>
                                 <b:dataTableColumn value="#{gerenciarBensBean.formatarNumero(lista.ganhoPerda)}" label="Ganho/Perda" content-style="#{relatorioBensBean.formatarCor(lista.ganhoPerda)}"/>
 
 
-                                <b:dataTableColumn label="Opções" style="width: 170px">
-                                    <h:panelGrid style="width: 170px; margin-left: auto; margin-right: auto" columns="2">
+                                <b:dataTableColumn label="Opções">
                                         <b:commandButton iconAwesome="minus-circle" value="Baixar" size="sm" class="btn btn-lg"
-                                                         title="Editar Item" look="warning"  action="#{gerenciarBensBean.baixar(lista)}" >
-                                        </b:commandButton>
-                                    </h:panelGrid>
+                                                         title="Editar Item" look="warning"  action="#{gerenciarBensBean.baixar(lista)}"/>
                                 </b:dataTableColumn>
                             </b:dataTable>
                         </b:row>
