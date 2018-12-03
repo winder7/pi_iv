@@ -169,15 +169,12 @@ public class BensDAO {
 
         try (PreparedStatement pstm = BD.getConexao().prepareStatement(SQL)) {
 
-            Date date = new Date();
+            Date now = new Date();
 
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    double depreciacao = 0.0;
-                    double valorContabil = 0.0;
-                    double ganhoPerda = 0.0;
                     String data_Compra = rs.getString("data_compra");
-                    String data_baixa = rs.getString("data_baixa") != null ? rs.getString("data_baixa") : Formatar.data(date, "yyyy-MM-dd");
+                    String data_baixa = rs.getString("data_baixa") != null ? rs.getString("data_baixa") : Formatar.data(now, "yyyy-MM-dd");
                     double vida_util = rs.getInt("vida_util");
                     int tempo_uso = rs.getInt("tempo_uso");
                     int turno_trabalhado = rs.getInt("turno_trabalhado");
@@ -187,16 +184,17 @@ public class BensDAO {
 
                     int periodo = Obter.Periodo(data_Compra, data_baixa);
                     double taxa = Obter.Taxa(vida_util, tempo_uso, turno_trabalhado);
-                    depreciacao = Obter.Depreciacao(custo_bem, valor_residual, taxa, periodo);
-                    valorContabil = Obter.ValorContabil(custo_bem, depreciacao);
-                    ganhoPerda = Obter.GanhoPerda(custo_baixa, valorContabil);
-                    System.out.println("Teste" + rs.getString("data_baixa"));
+                    double depreciacao = Obter.Depreciacao(custo_bem, valor_residual, taxa, periodo);
+                    depreciacao = depreciacao < (custo_bem - valor_residual) ? depreciacao : (custo_bem - valor_residual);
+                    double valorContabil = Obter.ValorContabil(custo_bem, depreciacao);
+                    double ganhoPerda = Obter.GanhoPerda(custo_baixa, valorContabil);
+                    double percentDepr = (depreciacao / (custo_bem - valor_residual)) * 100;
 
                     Bens b = new Bens(
                             rs.getInt("id"),
                             rs.getString("nome"),
                             Formatar.data(rs.getDate("data_compra"), "dd/MM/yyyy"),
-                            data_baixa,
+                            Formatar.Data(data_baixa, "yyyy-MM-dd", "dd/MM/yyyy") + " " + (data_baixa.equals(Formatar.data(now, "yyyy-MM-dd")) ? "(Hoje)" : ""),
                             rs.getInt("vida_util"),
                             rs.getDouble("valor_residual"),
                             rs.getInt("tempo_uso"),
@@ -212,7 +210,8 @@ public class BensDAO {
                             rs.getString("nome_empresa"),
                             rs.getString("responsavel"),
                             rs.getString("telefone"),
-                            rs.getString("email")
+                            rs.getString("email"),
+                            percentDepr
                     );
                     bens.add(b);
                 }

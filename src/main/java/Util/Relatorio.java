@@ -1,6 +1,6 @@
 package Util;
 
-import entities.Bens;
+import entities.BensRel;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class Relatorio {
         this.response = (HttpServletResponse) context.getExternalContext().getResponse();
     }
 
-    public void getRelatorio(List<Bens> lista) {
+    public void getRelatorio(List<BensRel> lista) {
         stream = this.getClass().getResourceAsStream("/report/relDepreciacacao.jasper");
         Map<String, Object> params = new HashMap<>();
         baos = new ByteArrayOutputStream();
