@@ -172,6 +172,11 @@ public class BensDAO {
             Date now = new Date();
 
             try (ResultSet rs = pstm.executeQuery()) {
+                double somaCustoBem = 0.0;
+                double somaValorVenda = 0.0;
+                double somaValorContabil = 0.0;
+                double somaGanhoPerda = 0.0;
+                double somaDepreciacao = 0.0;
                 while (rs.next()) {
                     String data_Compra = rs.getString("data_compra");
                     String data_baixa = rs.getString("data_baixa") != null ? rs.getString("data_baixa") : Formatar.data(now, "yyyy-MM-dd");
@@ -190,6 +195,12 @@ public class BensDAO {
                     double ganhoPerda = Obter.GanhoPerda(custo_baixa, valorContabil);
                     double percentDepr = (depreciacao / (custo_bem - valor_residual)) * 100;
 
+                    somaCustoBem += rs.getDouble("custo_bem");
+                    somaValorVenda += rs.getDouble("custo_venda");
+                    somaValorContabil += valorContabil;
+                    somaGanhoPerda += ganhoPerda;
+                    somaDepreciacao += depreciacao;
+                            
                     Bens b = new Bens(
                             rs.getInt("id"),
                             rs.getString("nome"),
@@ -215,6 +226,9 @@ public class BensDAO {
                     );
                     bens.add(b);
                 }
+                Bens b = new Bens(
+                        0, "Total:", "-", "-", 0, 0.0, 0, "-", "-", 0, 0, somaCustoBem, somaValorVenda, somaDepreciacao, somaValorContabil, somaGanhoPerda, "-", "-", "-", "-", 0.0);
+                bens.add(b);
                 pstm.close();
             }
             System.out.println("Bens obtidos e calculados com sucesso!");

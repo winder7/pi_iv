@@ -84,7 +84,7 @@
 
                                 <b:dataTableColumn label="Opções">
                                     <b:commandButton iconAwesome="minus-circle" value="Baixar" size="sm" class="btn btn-lg"
-                                                     title="Editar Item" look="warning"  action="#{gerenciarBensBean.baixar(lista)}"/>
+                                                     title="Editar Item" look="warning"  action="#{gerenciarBensBean.baixar(lista)}" disabled="#{!lista.situacao.equalsIgnoreCase('Em Uso')}"/>
                                 </b:dataTableColumn>
                             </b:dataTable>
                         </b:row>
